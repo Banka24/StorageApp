@@ -55,12 +55,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Administrator.cs" />
     <Compile Include="Autorization.xaml.cs">
       <DependentUpon>Autorization.xaml</DependentUpon>
     </Compile>
     <Compile Include="InfoItem.xaml.cs">
       <DependentUpon>InfoItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Item.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="ReportItems.xaml.cs">
       <DependentUpon>ReportItems.xaml</DependentUpon>
     </Compile>
@@ -70,6 +73,8 @@
     <Compile Include="ReportWorker.xaml.cs">
       <DependentUpon>ReportWorker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SqlDataBase.cs" />
+    <Compile Include="Worker.cs" />
     <Page Include="AddItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
