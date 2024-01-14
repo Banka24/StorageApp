@@ -15,16 +15,16 @@
             <RowDefinition Height="120"/>
             <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
-        <Label Content="редактор продукта" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" Height="37" Margin="308,0" Width="184"/>
-        <Label Content="изменить категорию" Grid.Row="1" Margin="60,30,540,30" FontSize="20"/>
-        <Label Content="введите данные" FontSize="20" Margin="100,30,540,30" Grid.Row="2"/>
-        <ComboBox Grid.Row="1" Margin="270,30,150,30">
+        <TextBlock Text="редактор продукта" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TextBlockLarge}" Margin="308,0" Width="184"/>
+        <TextBlock Text="изменить категорию" Grid.Row="1" Margin="129,43,540,30" Style="{StaticResource TextBlockSmall}"/>
+        <TextBlock Text="введите данные" Style="{StaticResource TextBlockSmall}" Margin="152,48,545,50" Grid.Row="2"/>
+        <ComboBox Grid.Row="1" Margin="260,30,220,30">
             <TextBlock>категория1</TextBlock>
             <TextBlock>категория2</TextBlock>
             <TextBlock>категория3</TextBlock>
         </ComboBox>
-        <TextBox Grid.Row="2" Margin="270,30,150,50"/>
-        <Button Content="редактировать" Grid.Row="3" Margin="200,30,430,50"/>
-        <Button Content="выход" Grid.Row="3" Margin="430,30,200,50"/>
+        <TextBox Grid.Row="2" Style="{StaticResource TextBox_Small}" Margin="260,40,220,40" Width="Auto"/>
+        <Button Content="редактировать" Grid.Row="3"  Style="{StaticResource button_small}" Margin="210,30,440,50" Height="Auto" Width="Auto"/>
+        <Button Content="выход" Grid.Row="3" Style="{StaticResource button_small}" Margin="440,30,210,50" Height="Auto" Width="Auto"/>
     </Grid>
 </Page>
