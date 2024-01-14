@@ -9,6 +9,22 @@
       Title="EditItem">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+        <Label Content="редактор продукта" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" Height="37" Margin="308,0" Width="184"/>
+        <Label Content="изменить категорию" Grid.Row="1" Margin="60,30,540,30" FontSize="20"/>
+        <Label Content="введите данные" FontSize="20" Margin="100,30,540,30" Grid.Row="2"/>
+        <ComboBox Grid.Row="1" Margin="270,30,150,30">
+            <TextBlock>категория1</TextBlock>
+            <TextBlock>категория2</TextBlock>
+            <TextBlock>категория3</TextBlock>
+        </ComboBox>
+        <TextBox Grid.Row="2" Margin="270,30,150,50"/>
+        <Button Content="редактировать" Grid.Row="3" Margin="200,30,430,50"/>
+        <Button Content="выход" Grid.Row="3" Margin="430,30,200,50"/>
     </Grid>
 </Page>

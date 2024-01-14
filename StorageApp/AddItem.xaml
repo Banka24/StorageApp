@@ -9,6 +9,27 @@
       Title="AddItem">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Label Content="добавление товара" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20"/>
+        <Label Content="название товара" Grid.Row="1" Margin="100,30,530,30" FontSize="20"/>
+        <Label Content="категория" FontSize="20" Margin="160,30,530,30" Grid.Row="2"/>
+        <Label Content="ряд" Grid.Row="3" Margin="200,20,550,40" FontSize="20"/>
+        <Label Content="место" Grid.Row="3" Margin="380,20,350,40" FontSize="20"/>
+        <TextBox Grid.Row="1" Margin="270,30,150,30"/>
+        <TextBox Grid.Row="3" Margin="250,30,450,45"/>
+        <TextBox Grid.Row="3" Margin="450,30,250,45"/>
+        <ComboBox Grid.Row="2" Margin="260,30,150,30">
+            <TextBlock>категория1</TextBlock>
+            <TextBlock>категория2</TextBlock>
+            <TextBlock>категория3</TextBlock>
+        </ComboBox>
+        <Button Content="добавить" Grid.Row="4" Margin="200,30,430,20"/>
+        <Button Content="выход" Grid.Row="4" Margin="430,30,200,20"/>
     </Grid>
 </Page>
