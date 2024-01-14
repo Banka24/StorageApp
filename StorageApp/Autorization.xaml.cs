@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace StorageApp
@@ -18,11 +17,23 @@ namespace StorageApp
     /// <summary>
     /// Логика взаимодействия для Autorization.xaml
     /// </summary>
-    public partial class Autorization : Page
+    public partial class Autorization : Window
     {
         public Autorization()
         {
             InitializeComponent();
+        }
+
+        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = new MainWindow();
+            main.Show();
+            Close();
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }
