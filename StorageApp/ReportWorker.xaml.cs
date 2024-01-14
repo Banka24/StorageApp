@@ -43,7 +43,6 @@ namespace StorageApp
         {
             var chart = (LiveCharts.Wpf.PieChart)chartpoint.ChartView;
 
-            //clear selected slice.
             foreach (PieSeries series in chart.Series)
                 series.PushOut = 0;
 
