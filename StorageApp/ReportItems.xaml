@@ -19,7 +19,7 @@
             <lvc:PieChart.Series>
                 <lvc:PieSeries Name="Series1" Title="Всего" Values="3" DataLabels="True"
                                LabelPoint="{Binding PointLabel}"/>
-                <lvc:PieSeries Name="Series2" Title="Прибыло" Values="4" DataLabels="True" 
+                <lvc:PieSeries Name="Series2" Title="Поступило" Values="4" DataLabels="True" 
                                LabelPoint="{Binding PointLabel}"/>
                 <lvc:PieSeries Name="Series3" Title="На складе" Values="6" DataLabels="True" 
                                LabelPoint="{Binding PointLabel}"/>
