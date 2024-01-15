@@ -24,5 +24,20 @@ namespace StorageApp
         {
             InitializeComponent();
         }
+
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddItem());
+        }
+
+        private void BtnEd_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new EditItem());
+        }
+
+        private void BtnDel_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new DeleteItem());
+        }
     }
 }

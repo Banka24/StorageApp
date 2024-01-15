@@ -24,5 +24,15 @@ namespace StorageApp
         {
             InitializeComponent();
         }
+
+        private void BtnIt_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ReportItems());
+        }
+
+        private void BtnWo_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ReportWorker());
+        }
     }
 }
