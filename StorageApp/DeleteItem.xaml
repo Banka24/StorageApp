@@ -15,9 +15,17 @@
             <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Удаление продукта" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TextBlockLarge}"/>
-        <TextBlock Text="Уникальный ID:" Grid.Row="1" Style="{StaticResource TextBlockSmall}" Margin="150,65,555,60"/>
-        <TextBox Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TextBox_Small}" Margin="250,50,250,60"/>
-        <Button x:Name="delete" Click="delete_Click" Content="Удалить" Grid.Row="2" Style="{StaticResource button_small}" Margin="230,50,460,50"/>
-        <Button x:Name="exit" Click="exit_Click" Content="Выход" Grid.Row="2" Style="{StaticResource button_small}" Margin="460,50,230,50"/>
+        
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Width="600">
+            <TextBlock Text="Уникальный ID:" Style="{StaticResource TextBlockLarge}" Margin="20,60,10,35"/>
+            <TextBox Style="{StaticResource TextBox_Small}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4">
+            <Button x:Name="delete" Click="delete_Click" Content="Удалить" Grid.Row="2" Style="{StaticResource button_small}" Margin="25, 0"/>
+            <Button Name="exit" Content="Выход" Style="{StaticResource button_small}" Click="exit_Click" Margin="25, 0"/>
+        </StackPanel>
+        
+        
     </Grid>
 </Page>
