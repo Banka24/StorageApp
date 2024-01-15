@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" ResizeMode="NoResize">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Добрый день, Имя" TextAlignment="Center" Style="{StaticResource TextBlockLarge}" VerticalAlignment="Center" />
+        <Button Content="информация о товаре" Grid.Row="1" Style="{StaticResource button_small}" Width="200" x:Name="BtnInfIt" Click="BtnInfIt_Click"/>
+        <Button Content="начать(закончить) смену" Grid.Row="2" Style="{StaticResource button_small}" Width="200"/>
     </Grid>
 </Window>

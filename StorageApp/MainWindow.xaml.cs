@@ -24,5 +24,11 @@ namespace StorageApp
         {
             InitializeComponent();
         }
+
+        private void BtnInfIt_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new InfoItem();
+            window.Show(); 
+        }
     }
 }
