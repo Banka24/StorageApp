@@ -24,5 +24,15 @@ namespace StorageApp
         {
             InitializeComponent();
         }
+
+        private void redact_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void exit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

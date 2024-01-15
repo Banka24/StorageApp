@@ -29,7 +29,7 @@
             <TextBlock>категория2</TextBlock>
             <TextBlock>категория3</TextBlock>
         </ComboBox>
-        <Button Content="Добавить" Grid.Row="4" Margin="200,30,430,20" Style="{StaticResource button_small}"/>
-        <Button Content="Выход" Grid.Row="4" Margin="430,30,200,20" Style="{StaticResource button_small}"/>
+        <Button x:Name="add" Click="add_Click" Content="Добавить" Grid.Row="4" Margin="200,30,430,20" Style="{StaticResource button_small}"/>
+        <Button x:Name="exit" Click="exit_Click" Content="Выход" Grid.Row="4" Margin="430,30,200,20" Style="{StaticResource button_small}"/>
     </Grid>
 </Page>
