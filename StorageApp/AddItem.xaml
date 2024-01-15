@@ -16,20 +16,20 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="добавление товара" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TextBlockLarge}"/>
-        <TextBlock Text="название товара" Grid.Row="1" Margin="100,30,530,30" Style="{StaticResource TextBlockLarge}"/>
-        <TextBlock Text="категория" Style="{StaticResource TextBlockSmall}" Margin="150,45,580,30" Grid.Row="2"/>
-        <TextBlock Text="ряд" Grid.Row="3" Margin="185,30,590,45" Style="{StaticResource TextBlockSmall}" />
-        <TextBlock Text="место" Grid.Row="3" Margin="375,30,380,45" Style="{StaticResource TextBlockSmall}"/>
-        <TextBox Grid.Row="1" Style="{StaticResource TextBox_Small}" Margin="260,30,230,30" Width="Auto" Height="Auto"/>
-        <TextBox Grid.Row="3" Style="{StaticResource TextBox_Small}" Margin="210,30,460,45" Height="Auto" Width="Auto"/>
+        <TextBlock Text="Добавление товара" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TextBlockLarge}"/>
+        <TextBlock Text="Название товара" Grid.Row="1" Margin="100,30,530,30" Style="{StaticResource TextBlockLarge}"/>
+        <TextBlock Text="Категория" Style="{StaticResource TextBlockSmall}" Margin="150,45,580,30" Grid.Row="2"/>
+        <TextBlock Text="Ряд" Grid.Row="3" Margin="185,30,590,45" Style="{StaticResource TextBlockSmall}" />
+        <TextBlock Text="Место" Grid.Row="3" Margin="375,30,380,45" Style="{StaticResource TextBlockSmall}"/>
+        <TextBox Grid.Row="1" Style="{StaticResource TextBox_Small}" Margin="260,30,230,30"/>
+        <TextBox Grid.Row="3" Style="{StaticResource TextBox_Small}" Margin="210,30,430,45" Width="Auto" Height="Auto"/>
         <TextBox Grid.Row="3" Style="{StaticResource TextBox_Small}" Margin="420,30,220,45" Height="Auto" Width="Auto"/>
         <ComboBox Grid.Row="2" Margin="230,30,199,30">
             <TextBlock>категория1</TextBlock>
             <TextBlock>категория2</TextBlock>
             <TextBlock>категория3</TextBlock>
         </ComboBox>
-        <Button Content="добавить" Grid.Row="4" Margin="200,30,430,20" Style="{StaticResource button_small}"/>
-        <Button Content="выход" Grid.Row="4" Margin="430,30,200,20" Style="{StaticResource button_small}"/>
+        <Button Content="Добавить" Grid.Row="4" Margin="200,30,430,20" Style="{StaticResource button_small}"/>
+        <Button Content="Выход" Grid.Row="4" Margin="430,30,200,20" Style="{StaticResource button_small}"/>
     </Grid>
 </Page>
