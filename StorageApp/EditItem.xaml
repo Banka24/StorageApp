@@ -15,8 +15,7 @@
             <RowDefinition Height="120"/>
             <RowDefinition Height="130"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Редактор продукта" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TextBlockLarge}" Margin="308,0" Width="184"/>
-
+        <TextBlock Text="Редактор продукта" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Width="184"/>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Width="600">
             <TextBlock Text="Изменить категорию" Grid.Row="1" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center"/>
             <ComboBox Width="400" Height="40" Margin="10">
@@ -25,12 +24,10 @@
                 <TextBlock>категория3</TextBlock>
             </ComboBox>
         </StackPanel>
-
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal" Width="500">
             <TextBlock Text="Введите данные" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center" Margin="20"/>
             <TextBox Style="{StaticResource TextBox_Small}" Width="300"/>
         </StackPanel>
-
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4" Width="400">
             <Button x:Name="redact" Click="redact_Click" Content="Редактировать" Style="{StaticResource button_small}" Margin="25" Width="150" Height="50"/>
             <Button Name="exit" Content="Выйти" Style="{StaticResource button_small}" Click="exit_Click" Margin="25" Width="150" Height="50"/>

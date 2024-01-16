@@ -14,13 +14,11 @@
             <RowDefinition Height="150"/>
             <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Удаление продукта" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TextBlockLarge}"/>
-        
+        <TextBlock Text="Удаление продукта" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}"/>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Width="600">
-            <TextBlock Text="Уникальный ID:" Style="{StaticResource TextBlockLarge}" Margin="20,60,10,35"/>
+            <TextBlock Text="Инвентарный номер:" Style="{StaticResource TextBlockLarge}" Margin="20,60,10,35"/>
             <TextBox Style="{StaticResource TextBox_Small}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </StackPanel>
-
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4">
             <Button x:Name="delete" Click="delete_Click" Content="Удалить" Grid.Row="2" Style="{StaticResource button_small}" Margin="25, 0"/>
             <Button Name="exit" Content="Выход" Style="{StaticResource button_small}" Click="exit_Click" Margin="25, 0"/>
