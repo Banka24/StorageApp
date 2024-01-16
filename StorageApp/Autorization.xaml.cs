@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data.Entity;
 
 namespace StorageApp
 {
@@ -24,21 +25,42 @@ namespace StorageApp
         {
             InitializeComponent();
         }
+
+        private void MakeAutorization(string login, string password)
+        {
+            var user = CheckUser(login, password);
+            if(user is Worker)
+            {
+                ChangeWindow(user.Name.FirstName);
+            }
+            else
+            {
+                Environment.Exit(0);
+            }
+        }
+
         private Worker CheckUser(string login, string password)
         {
             using (var context = new MyDbContext())
             {
-                var user = context.Workers.SingleOrDefault(i => i.Login == login && i.Password == password);
+                var user = context.Workers.Include(i => i.Name).SingleOrDefault(i => i.Login == login && i.Password == password);
                 return user;
             }
+        }
 
+        private void ChangeWindow(string name)
+        {
+            var window = new MainWindow(name);
+            window.Show();
+            Close();
+            
         }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
             string login = LoginTextBox.Text;
             string password = MyPassword.Password;
-            var worker = CheckUser(login, password);
+            MakeAutorization(login, password);
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)

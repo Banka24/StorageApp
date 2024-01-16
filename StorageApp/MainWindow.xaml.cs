@@ -25,6 +25,11 @@ namespace StorageApp
             InitializeComponent();
         }
 
+        public MainWindow(string name) : this()
+        {
+            textName.Text = $"Добрый день, {name}";
+        }
+
         private void BtnInfIt_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(new InfoItem());
