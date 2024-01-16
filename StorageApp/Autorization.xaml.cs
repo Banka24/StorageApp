@@ -24,10 +24,21 @@ namespace StorageApp
         {
             InitializeComponent();
         }
+        private Worker CheckUser(string login, string password)
+        {
+            using (var context = new MyDbContext())
+            {
+                var user = context.Workers.SingleOrDefault(i => i.Login == login && i.Password == password);
+                return user;
+            }
+
+        }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-
+            string login = LoginTextBox.Text;
+            string password = MyPassword.Password;
+            var worker = CheckUser(login, password);
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
