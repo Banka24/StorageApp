@@ -93,6 +93,10 @@
     <Compile Include="InfoItem.xaml.cs">
       <DependentUpon>InfoItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Item.cs" />
+    <Compile Include="MyDbContext.cs" />
+    <Compile Include="Name.cs" />
+    <Compile Include="Rank.cs" />
     <Compile Include="ReportItems.xaml.cs">
       <DependentUpon>ReportItems.xaml</DependentUpon>
     </Compile>
@@ -102,6 +106,8 @@
     <Compile Include="ReportWorker.xaml.cs">
       <DependentUpon>ReportWorker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Status.cs" />
+    <Compile Include="Worker.cs" />
     <Page Include="AddItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

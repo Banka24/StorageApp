@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.Entity;
 
 namespace StorageApp
 {
@@ -23,6 +24,25 @@ namespace StorageApp
         public InfoItem()
         {
             InitializeComponent();
+        }
+
+        private Item GetItemInfo(string number)
+        {
+            using(var context = new MyDbContext())
+            {
+                var item = context.Items.Include(i => i.Status).FirstOrDefault(i => i.InventoryNumber == number);
+                return item;
+            }
+        }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            string inventoryNumber = InventoryBox.Text;
+            var item = GetItemInfo(inventoryNumber);
+            CategoryBox.Text = item.Category;
+            StatusBox.Text = item.Status?.Name;
+            RowBox.Text = item.Row.ToString();
+            ShelfBox.Text = item.Shelf.ToString();
         }
     }
 }
