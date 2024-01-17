@@ -44,5 +44,15 @@ namespace StorageApp
         {
             MainFrame.Navigate(new InfoItem());
         }
+
+        private void BtnInfIt_Click_1(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new Editor());
+        }
+
+        private void BtnGoAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new Reports());
+        }
     }
 }
