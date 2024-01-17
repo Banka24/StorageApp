@@ -35,7 +35,7 @@ namespace StorageApp
             }
             else
             {
-                Environment.Exit(0);
+                MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
             }
         }
 

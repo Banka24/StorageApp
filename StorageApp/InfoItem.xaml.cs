@@ -37,10 +37,14 @@ namespace StorageApp
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            string inventoryNumber = InventoryBox.Text;
-            var item = GetItemInfo(inventoryNumber);
+            var item = GetItemInfo(InventoryBox.Text);
+            if(item is null)
+            {
+                MessageBox.Show("Такого товара нет.\nПерепроверьте инвентарный номер");
+                return;
+            }
             CategoryBox.Text = item.Category;
-            StatusBox.Text = item.Status?.Name;
+            StatusBox.Text = item.Status.Name;
             RowBox.Text = item.Row.ToString();
             ShelfBox.Text = item.Shelf.ToString();
         }

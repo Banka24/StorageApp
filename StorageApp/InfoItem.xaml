@@ -9,7 +9,6 @@
       Title="InfoItem" Background="White">
 
     <Grid>
-        
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
