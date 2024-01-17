@@ -27,12 +27,15 @@ namespace StorageApp
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
-
+            if (string.IsNullOrWhiteSpace(textbox1.Text)||string.IsNullOrWhiteSpace(textbox2.Text)|| string.IsNullOrWhiteSpace(textbox3.Text) || string.IsNullOrWhiteSpace(combo.Text))
+            {
+                MessageBox.Show("введите все требуемые данные данные");
+            }
         }
 
         private void exit_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new Editor());
         }
     }
 }
