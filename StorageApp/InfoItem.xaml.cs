@@ -48,5 +48,10 @@ namespace StorageApp
             RowBox.Text = item.Row.ToString();
             ShelfBox.Text = item.Shelf.ToString();
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
