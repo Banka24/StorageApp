@@ -23,7 +23,8 @@ namespace StorageApp
         private enum Role
         {
             Administrator = 1,
-            Worker
+            Supervision,
+            Worker,
         }
         public MainWindow()
         {
@@ -33,10 +34,16 @@ namespace StorageApp
         public MainWindow(string name, int role) : this()
         {
             textName.Text = $"Добрый день, {name}";
-            if(role == (int)Role.Worker)
+            switch (role)
             {
-                BtnInfIt.Visibility = Visibility.Visible;
-                BtnGoWork.Visibility = Visibility.Visible;
+                case (int)Role.Administrator:
+                    BtnInfAdmin.Visibility = Visibility.Visible;
+                    BtnGoAdmin.Visibility = Visibility.Visible;
+                    break;
+                case (int)Role.Worker:
+                    BtnInfIt.Visibility = Visibility.Visible;
+                    BtnGoWork.Visibility = Visibility.Visible;
+                    break;
             }
         }
 
