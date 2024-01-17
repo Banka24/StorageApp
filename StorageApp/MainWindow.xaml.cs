@@ -20,14 +20,24 @@ namespace StorageApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private enum Role
+        {
+            Administrator = 1,
+            Worker
+        }
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        public MainWindow(string name) : this()
+        public MainWindow(string name, int role) : this()
         {
             textName.Text = $"Добрый день, {name}";
+            if(role == (int)Role.Worker)
+            {
+                BtnInfIt.Visibility = Visibility.Visible;
+                BtnGoWork.Visibility = Visibility.Visible;
+            }
         }
 
         private void BtnInfIt_Click(object sender, RoutedEventArgs e)

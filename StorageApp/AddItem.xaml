@@ -36,7 +36,7 @@
             <TextBox  Style="{StaticResource TextBox_Small}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4">
-            <Button Name="add" Content="добавить" Style="{StaticResource button_small}" Click="add_Click" Margin="25, 0"/>
+            <Button Name="add" Content="Добавить" Style="{StaticResource button_small}" Click="add_Click" Margin="25, 0"/>
             <Button Name="exit" Content="Выйти" Style="{StaticResource button_small}" Click="exit_Click" Margin="25, 0"/>
         </StackPanel>
     </Grid>
