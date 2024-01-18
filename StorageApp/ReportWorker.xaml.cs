@@ -34,7 +34,7 @@ namespace StorageApp
 
         private void BackClicked(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new Reports());
         }
 
         public Func<ChartPoint, string> PointLabel { get; set; }

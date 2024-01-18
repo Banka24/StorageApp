@@ -27,12 +27,15 @@ namespace StorageApp
 
         private void exit_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new Editor());
         }
 
-        private void delete_Click(object sender, RoutedEventArgs e)
+        private void delete1_Click(object sender, RoutedEventArgs e)
         {
-
+            if(string.IsNullOrWhiteSpace(deletebox.Text))
+            {
+                MessageBox.Show("введите все требуемые данные данные");
+            }
         }
     }
 }

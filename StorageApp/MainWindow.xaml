@@ -15,7 +15,9 @@
         </Grid.RowDefinitions>
         <TextBlock Name="textName" Text="" TextAlignment="Center" Style="{StaticResource TextBlockLarge}" VerticalAlignment="Center" />
         <Button Name="BtnInfIt" Content="информация о товаре" Grid.Row="1" Style="{StaticResource button_small}" Width="200" Visibility="Hidden" Click="BtnInfIt_Click"/>
+        <Button Name="BtnInfAdmin" Content="Редактор товаров" Grid.Row="1" Style="{StaticResource button_small}" Width="200" Visibility="Hidden" Click="BtnInfIt_Click_1"/>
         <Button Name="BtnGoWork"  Content="начать(закончить) смену" Grid.Row="2" Style="{StaticResource button_small}" Visibility="Hidden" Width="200"/>
+        <Button Name="BtnGoAdmin"  Content="Отчеты" Grid.Row="2" Style="{StaticResource button_small}" Visibility="Hidden" Width="200" Click="BtnGoAdmin_Click"/>
         <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.RowSpan="4"/>
     </Grid>
 </Window>

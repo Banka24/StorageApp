@@ -36,6 +36,9 @@
             <TextBlock Grid.Column="1" Text="Полка" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center" Margin="25, 0"/>
             <TextBox Name="ShelfBox" TextAlignment="Center" IsReadOnly="True" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBox_Small}" Margin="25, 0"/>
         </StackPanel>
-        <Button Name="OKButton" Click="OKButton_Click" Content="OK" Grid.Row="5" Style="{StaticResource button_small}"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5">
+            <Button Name="OKButton" Click="OKButton_Click" Content="OK" Margin="25, 0" Style="{StaticResource button_small}"/>
+            <Button Name="BackButton" Click="BackButton_Click" Margin="25, 0" Content="Назад"  Style="{StaticResource button_small}"/>
+        </StackPanel>
     </Grid>
 </Page>
