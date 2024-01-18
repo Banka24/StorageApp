@@ -39,5 +39,12 @@ namespace StorageApp
         {
             NavigationService.Navigate(new DeleteItem());
         }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new MainWindow();
+            window.Show();
+            Window.GetWindow(this)?.Close();
+        }
     }
 }

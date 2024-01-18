@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace StorageApp
 {
@@ -29,12 +31,8 @@ namespace StorageApp
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        public MainWindow(string name, int role) : this()
-        {
-            textName.Text = $"Добрый день, {name}";
-            switch (role)
+            textName.Text = $"Добрый день, {SharedContext.Name}";
+            switch (SharedContext.Role)
             {
                 case (int)Role.Administrator:
                     BtnInfAdmin.Visibility = Visibility.Visible;

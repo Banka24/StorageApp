@@ -34,5 +34,12 @@ namespace StorageApp
         {
             NavigationService.Navigate(new ReportWorker());
         }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new MainWindow();
+            window.Show();
+            Window.GetWindow(this)?.Close();
+        }
     }
 }

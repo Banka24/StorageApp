@@ -20,5 +20,6 @@
         <Button Content="Добавить" Grid.Row="1" Style="{StaticResource button_small}" Width="200" x:Name="BtnAdd" Click="BtnAdd_Click"/>
         <Button Content="Редактировать" Grid.Row="2" Style="{StaticResource button_small}" Width="200" x:Name="BtnEd" Click="BtnEd_Click"/>
         <Button Content="Удалить" Grid.Row="3" Style="{StaticResource button_small}" Width="200" x:Name="BtnDel" Click="BtnDel_Click"/>
+        <Button Content="Назад" Grid.Row="4" Style="{StaticResource button_small}" Width="100" HorizontalAlignment="Right" x:Name="BtnBack" Click="BtnBack_Click"/>
     </Grid>
 </Page>

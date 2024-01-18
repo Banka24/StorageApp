@@ -51,7 +51,9 @@ namespace StorageApp
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var window = new MainWindow();
+            window.Show();
+            Window.GetWindow(this)?.Close();
         }
     }
 }
