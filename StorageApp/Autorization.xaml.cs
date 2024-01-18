@@ -33,19 +33,22 @@ namespace StorageApp
                 var user = context.Workers.Include(i => i.Name).SingleOrDefault(i => i.Login == login && i.Password == password);
                 if (user is Worker)
                 {
-                    ChangeWindow(user.Name.FirstName, user.RankId);
+                    SharedContext.Name = user.Name.FirstName;
+                    SharedContext.Role = user.RankId;
+                    ChangeWindow();
                 }
                 else
                 {
                     MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
                 }
                 return user;
+
             }
         }
 
-        private void ChangeWindow(string name, int role)
+        private void ChangeWindow()
         {
-            var window = new MainWindow(name, role);
+            var window = new MainWindow();
             window.Show();
             Close();
             
