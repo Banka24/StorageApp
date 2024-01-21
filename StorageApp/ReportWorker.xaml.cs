@@ -1,19 +1,10 @@
 ﻿using LiveCharts;
-using LiveCharts.Wpf;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Data.Entity;
+using System.Linq;
 
 namespace StorageApp
 {
@@ -32,17 +23,16 @@ namespace StorageApp
             NavigationService.Navigate(new Reports());
         }
 
-        public Func<ChartPoint, string> PointLabel { get; set; }
-
-        private void Chart_OnDataClick(object sender, ChartPoint chartpoint)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var chart = (LiveCharts.Wpf.PieChart)chartpoint.ChartView;
+            using var context = new MyDbContext();
+            var workers = context.Workers.Include(i => i.Name).Include(i => i.Rank).ToList();
+            ListWorkers.ItemsSource = workers;
+        }
 
-            foreach (PieSeries series in chart.Series)
-                series.PushOut = 0;
-
-            var selectedSeries = (PieSeries)chartpoint.SeriesView;
-            selectedSeries.PushOut = 8;
+        private void UpdatePage_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Refresh();
         }
     }
 }

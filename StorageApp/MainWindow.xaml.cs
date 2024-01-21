@@ -59,5 +59,12 @@ namespace StorageApp
         {
             MainFrame.Navigate(new Reports());
         }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new Autorization();
+            window.Show();
+            Close();
+        }
     }
 }

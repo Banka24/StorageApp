@@ -6,10 +6,10 @@
       xmlns:local="clr-namespace:StorageApp" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="810"
-      Title="ReportWorker">
+      Title="ReportWorker" Loaded="Page_Loaded">
 
     <Grid Background="White">
-        <ListView Background="Lavender"
+        <ListView Name="ListWorkers" Background="Lavender"
           Width="810"
           Height="350">
             <ListView.Resources>
@@ -19,13 +19,16 @@
                 <GridView>
                     <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=Login}">Login</GridViewColumn>
                     <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=Password}">Password</GridViewColumn>
-                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=LastName}">Фамилия</GridViewColumn>
-                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=FirstName}">Имя</GridViewColumn>
-                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=RankID}">Должность</GridViewColumn>
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=Name.LastName}">Фамилия</GridViewColumn>
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=Name.FirstName}">Имя</GridViewColumn>
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=Rank.Title}">Должность</GridViewColumn>
                     <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=OnWork}">На работе</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Name="UpdatePage" Style="{StaticResource button_small}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" Click="UpdatePage_Click">
+            <Image Source="Images\Update.png"/>
+        </Button>
         <Button Style="{StaticResource button_small}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" Content="Назад" Click="BackClicked"/>
     </Grid>
 </Page>
