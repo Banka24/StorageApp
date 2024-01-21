@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 
@@ -67,11 +66,12 @@ namespace StorageApp
             {
                 MessageBox.Show("Вы закончили смену");
                 worker.OnWork = "NO";
-                return;
             }
-
+            else
+            {
             MessageBox.Show("Вы начали смену");
             worker.OnWork = "YES";
+            }
 
             context.SaveChanges();
         }

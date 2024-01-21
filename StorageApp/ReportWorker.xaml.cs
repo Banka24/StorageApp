@@ -1,6 +1,4 @@
-﻿using LiveCharts;
-using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Data.Entity;
