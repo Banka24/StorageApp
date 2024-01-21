@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace StorageApp
 {
@@ -65,6 +53,27 @@ namespace StorageApp
             var window = new Autorization();
             window.Show();
             Close();
+        }
+
+        private void BtnGoWork_Click(object sender, RoutedEventArgs e)
+        {
+            using var context = new MyDbContext();
+            var worker = context.Workers.Where(i => i.Name.FirstName == SharedContext.Name).SingleOrDefault();
+            if(worker == null)
+            {
+                return;
+            }
+            if(worker.OnWork == "YES") 
+            {
+                MessageBox.Show("Вы закончили смену");
+                worker.OnWork = "NO";
+                return;
+            }
+
+            MessageBox.Show("Вы начали смену");
+            worker.OnWork = "YES";
+
+            context.SaveChanges();
         }
     }
 }
