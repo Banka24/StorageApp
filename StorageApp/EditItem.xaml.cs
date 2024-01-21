@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Data.Entity;
-using System.Runtime.Remoting.Contexts;
-using System.Net.NetworkInformation;
 
 namespace StorageApp
 {
@@ -62,16 +51,26 @@ namespace StorageApp
                         }
                         item.Shelf = shelf;
                         break;
-                    //case "CategoryId":
-                    //    string[] columns = { "Id", "InventoryNumber", "Status", "Category" };
-                    //    string[] categories = typeof(Item).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
-                    //    foreach (var category in categories)
-                    //    {
-                    //        Combo.Items.Add(category);
-                    //    }
-                    //    break;
-                    //case "StatusId":
-                    //    break;
+                    case "Category":
+                        if (!string.IsNullOrWhiteSpace(ComboCategory.Text))
+                        {
+                            int? categoryId = context.Categorys.Where(i => i.Name == ComboCategory.Text)?.FirstOrDefault().Id;
+                            if(categoryId is not null)
+                            {
+                                item.CategoryId = (int)categoryId;
+                            }
+                        }
+                        break;
+                    case "Status":
+                        if (!string.IsNullOrWhiteSpace(ComboCategory.Text))
+                        {
+                            int? statusId = context.Status.Where(i => i.Name == ComboCategory.Text)?.FirstOrDefault().Id;
+                            if (statusId is not null)
+                            {
+                                item.StatusId = (byte)statusId;
+                            }
+                        }
+                        break;
                     default:
                         MessageBox.Show("Произошла ошибка.\nЯ не знаю такой операции.\nВозможно это добавиться в обновлениях.");
                         return;
@@ -83,7 +82,7 @@ namespace StorageApp
 
         private void Redact_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(Data.Text) || string.IsNullOrWhiteSpace(Combo.Text) || string.IsNullOrWhiteSpace(InventoryNumberTextBox.Text))
+            if (string.IsNullOrWhiteSpace(Data.Text) && Data.IsEnabled is true || string.IsNullOrWhiteSpace(Combo.Text) || string.IsNullOrWhiteSpace(InventoryNumberTextBox.Text))
             {
                 MessageBox.Show("введите все требуемые данные данные");
                 return;
@@ -114,9 +113,11 @@ namespace StorageApp
             if(Combo.Text == "Status" || Combo.Text == "Category")
             {
                 ComboCategory.IsEnabled = true;
+                Data.IsEnabled = false;
                 return;
             }
             ComboCategory.IsEnabled = false;
+            Data.IsEnabled = true;
         }
 
         private void AddItems(in string[] categories)
@@ -130,16 +131,15 @@ namespace StorageApp
         private void ComboCategory_GotMouseCapture(object sender, MouseEventArgs e)
         {
             ComboCategory.Items.Clear();
-            string[] columns = { "Id", "Items" };
             using var context = new MyDbContext();
             switch (Combo.Text)
             {
                 case "Status":
-                    string[] categories = typeof(Status).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
-                    AddItems(categories);
+                    string[] statuses = context.Status.Select(i => i.Name).ToArray();
+                    AddItems(statuses);
                     break;
                 case "Category":
-                    categories = typeof(Category).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
+                    string[] categories = context.Categorys.Select(i => i.Name).ToArray();
                     AddItems(categories);
                     break;
             }
