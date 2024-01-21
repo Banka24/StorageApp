@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,17 +27,75 @@ namespace StorageApp
             InitializeComponent();
         }
 
-        private void add_Click(object sender, RoutedEventArgs e)
+        private bool CheckDigitInString(in string value)
         {
-            if (string.IsNullOrWhiteSpace(textbox1.Text)||string.IsNullOrWhiteSpace(textbox2.Text)|| string.IsNullOrWhiteSpace(textbox3.Text) || string.IsNullOrWhiteSpace(combo.Text))
+            bool flag = false;
+            char[] chars = value.ToCharArray();
+            foreach (char c in chars)
             {
-                MessageBox.Show("введите все требуемые данные данные");
+                flag = char.IsDigit(c) ? true : false;
             }
+            return flag;
         }
 
-        private void exit_Click(object sender, RoutedEventArgs e)
+        private Item MakeItem() 
+        {
+            using var context = new MyDbContext();
+            var item = new Item
+            {
+                InventoryNumber = $"{NumberItem.Text}{NumberParty.Text}{DateTime.Now.ToString("ddMMyyyy")}",
+                CategoryId = context.Categorys.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefault(),
+                StatusId = 1,
+                Row = Convert.ToInt32(RowTextBox.Text),
+                Shelf = Convert.ToInt32(ShelfTextBox.Text),
+            };
+
+            return item;
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Combo.Text))
+            {
+                MessageBox.Show("Выберите категорию");
+                return;
+            }
+
+            if (!CheckDigitInString(NumberItem.Text) || !CheckDigitInString(NumberParty.Text))
+            {
+                MessageBox.Show("Введите числа в номер партии и порядковый номер");
+                return;
+            }
+
+            if(!CheckDigitInString(RowTextBox.Text) || !CheckDigitInString(ShelfTextBox.Text))
+            {
+                MessageBox.Show("Введите ряд и полку");
+                return;
+            }
+
+            Item item = MakeItem();
+
+            using var context = new MyDbContext();
+            context.Items.Add(item);
+            context.SaveChanges();
+            MessageBox.Show("Товар добавлен");
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Editor());
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            using(var context = new MyDbContext())
+            {
+                string[] items = context.Categorys.Select(i => i.Name).ToArray();
+                foreach (var item in items)
+                {
+                    Combo.Items.Add(item);
+                }
+            }
         }
     }
 }

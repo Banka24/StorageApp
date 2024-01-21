@@ -43,7 +43,7 @@ namespace StorageApp
                 MessageBox.Show("Такого товара нет.\nПерепроверьте инвентарный номер");
                 return;
             }
-            CategoryBox.Text = item.Category;
+            //CategoryBox.Text = item.Category;
             StatusBox.Text = item.Status.Name;
             RowBox.Text = item.Row.ToString();
             ShelfBox.Text = item.Shelf.ToString();

@@ -25,17 +25,38 @@ namespace StorageApp
             InitializeComponent();
         }
 
-        private void redact_Click(object sender, RoutedEventArgs e)
+        private void Redact_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(data.Text)|| string.IsNullOrWhiteSpace(combo.Text))
+            if (string.IsNullOrWhiteSpace(Data.Text) || string.IsNullOrWhiteSpace(Combo.Text) || string.IsNullOrWhiteSpace(InventoryNumberTextBox.Text))
             {
                 MessageBox.Show("введите все требуемые данные данные");
             }
+
+            using(var context = new MyDbContext())
+            {
+                var item = context.Items?.SingleOrDefault(i => i.InventoryNumber == InventoryNumberTextBox.Text);
+                context.Items?.Remove(item);
+
+            }
         }
 
-        private void exit_Click(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Editor());
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (var context = new MyDbContext())
+            {
+                string[] columns = { "Id", "CategoryId", "StatusId" };
+                string[] categories = typeof(Item).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
+                foreach (var category in categories)
+                {
+                    Combo.Items.Add(category);
+                }
+            }
+        }
     }
 }
+

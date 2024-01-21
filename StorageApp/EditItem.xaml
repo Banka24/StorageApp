@@ -5,33 +5,32 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:StorageApp"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="EditItem">
+      d:DesignHeight="450" d:DesignWidth="800" Title="EditItem" Loaded="Page_Loaded">
 
     <Grid Background="White">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="120"/>
             <RowDefinition Height="130"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Редактор продукта" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Width="184"/>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Width="600">
-            <TextBlock Text="Изменить категорию" Grid.Row="1" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center"/>
-            <ComboBox x:Name="combo" Width="400" Height="40" Margin="10">
-                <TextBlock>категория1</TextBlock>
-                <TextBlock>категория2</TextBlock>
-                <TextBlock>категория3</TextBlock>
-            </ComboBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
+            <TextBlock Text="Введите инвентарный номер:" Margin="25, 10" Style="{StaticResource TextBlockSmall}"/>
+            <TextBox x:Name="InventoryNumberTextBox" Style="{StaticResource TextBox_Small}"/>
         </StackPanel>
-        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal" Width="500">
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal" Width="600">
+            <TextBlock Text="Изменить категорию" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center"/>
+            <ComboBox x:Name="Combo" Width="400" Height="40" Margin="10"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal" Width="500">
             <TextBlock Text="Введите данные" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center" Margin="20"/>
-            <TextBox x:Name="data" Style="{StaticResource TextBox_Small}" Width="300"/>
+            <TextBox x:Name="Data" Style="{StaticResource TextBox_Small}" Width="300"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4" Width="400">
-            <Button x:Name="redact" Click="redact_Click" Content="Редактировать" Style="{StaticResource button_small}" Margin="25" Width="150" Height="50"/>
-            <Button Name="exit" Content="Выйти" Style="{StaticResource button_small}" Click="exit_Click" Margin="25" Width="150" Height="50"/>
+            <Button x:Name="redact" Click="Redact_Click" Content="Редактировать" Style="{StaticResource button_small}" Margin="25" Width="150" Height="50"/>
+            <Button Name="Exit" Content="Выйти" Style="{StaticResource button_small}" Click="Exit_Click" Margin="25" Width="150" Height="50"/>
         </StackPanel>
-        
     </Grid>
 </Page>

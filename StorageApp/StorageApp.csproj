@@ -94,10 +94,16 @@
     <Compile Include="Autorization.xaml.cs">
       <DependentUpon>Autorization.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Category.cs" />
     <Compile Include="InfoItem.xaml.cs">
       <DependentUpon>InfoItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Item.cs" />
+    <Compile Include="Migrations\202401191913103_initial.cs" />
+    <Compile Include="Migrations\202401191913103_initial.designer.cs">
+      <DependentUpon>202401191913103_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyDbContext.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="Rank.cs" />
@@ -188,6 +194,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202401191913103_initial.resx">
+      <DependentUpon>202401191913103_initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
