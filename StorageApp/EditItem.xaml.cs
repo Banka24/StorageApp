@@ -63,6 +63,12 @@ namespace StorageApp
                         item.Shelf = shelf;
                         break;
                     //case "CategoryId":
+                    //    string[] columns = { "Id", "InventoryNumber", "Status", "Category" };
+                    //    string[] categories = typeof(Item).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
+                    //    foreach (var category in categories)
+                    //    {
+                    //        Combo.Items.Add(category);
+                    //    }
                     //    break;
                     //case "StatusId":
                     //    break;
@@ -94,12 +100,48 @@ namespace StorageApp
         {
             using (var context = new MyDbContext())
             {
-                string[] columns = { "Id", "InventoryNumber", "Status", "Category" };
+                string[] columns = { "Id", "InventoryNumber", "StatusId", "CategoryId" };
                 string[] categories = typeof(Item).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
                 foreach (var category in categories)
                 {
                     Combo.Items.Add(category);
                 }
+            }
+        }
+
+        private void Combo_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            if(Combo.Text == "Status" || Combo.Text == "Category")
+            {
+                ComboCategory.IsEnabled = true;
+                return;
+            }
+            ComboCategory.IsEnabled = false;
+        }
+
+        private void AddItems(in string[] categories)
+        {
+            foreach (var category in categories)
+            {
+                ComboCategory.Items.Add(category);
+            }
+        }
+
+        private void ComboCategory_GotMouseCapture(object sender, MouseEventArgs e)
+        {
+            ComboCategory.Items.Clear();
+            string[] columns = { "Id", "Items" };
+            using var context = new MyDbContext();
+            switch (Combo.Text)
+            {
+                case "Status":
+                    string[] categories = typeof(Status).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
+                    AddItems(categories);
+                    break;
+                case "Category":
+                    categories = typeof(Category).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
+                    AddItems(categories);
+                    break;
             }
         }
     }
