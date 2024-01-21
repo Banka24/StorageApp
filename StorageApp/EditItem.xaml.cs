@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Entity;
+using System.Runtime.Remoting.Contexts;
+using System.Net.NetworkInformation;
 
 namespace StorageApp
 {
@@ -25,18 +27,27 @@ namespace StorageApp
         {
             InitializeComponent();
         }
-        
+
+        private Item GetItem(MyDbContext context)
+        {
+            var item = context.Items.Include(i => i.Status).Include(i => i.Category).FirstOrDefault(i => i.InventoryNumber == InventoryNumberTextBox.Text);
+            if (item == null)
+            {
+                MessageBox.Show("Такого товара нет.\nПроверьте инвентарный номер.");
+            }
+            return item;
+        }
 
         private void EditInfo()
         {
             using var context = new MyDbContext();
-            var item = context.Items.Include(i => i.Status).Include(i => i.Category).FirstOrDefault(i => i.InventoryNumber == InventoryNumberTextBox.Text);
+            Item item = GetItem(context);
             if (item is not null)
             {
                 switch (Combo.Text)
                 {
                     case "Row":
-                        if(!int.TryParse(Data.Text, out int row))
+                        if (!int.TryParse(Data.Text, out int row))
                         {
                             MessageBox.Show("Введите число");
                             return;
@@ -49,7 +60,7 @@ namespace StorageApp
                             MessageBox.Show("Введите число");
                             return;
                         }
-                        item.Row = shelf;
+                        item.Shelf = shelf;
                         break;
                     //case "CategoryId":
                     //    break;
