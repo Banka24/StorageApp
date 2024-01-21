@@ -26,7 +26,7 @@ namespace StorageApp
             InitializeComponent();
         }
 
-        private Item GetItemInfo(string number)
+        private Item GetInfo(string number)
         {
             using(var context = new MyDbContext())
             {
@@ -37,7 +37,7 @@ namespace StorageApp
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            var item = GetItemInfo(InventoryBox.Text);
+            var item = GetInfo(InventoryBox.Text);
             if(item is null)
             {
                 MessageBox.Show("Такого товара нет.\nПерепроверьте инвентарный номер");
