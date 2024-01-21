@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,17 +26,23 @@ namespace StorageApp
             InitializeComponent();
         }
 
-        private void exit_Click(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Editor());
         }
 
-        private void delete1_Click(object sender, RoutedEventArgs e)
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrWhiteSpace(deletebox.Text))
+            if(string.IsNullOrWhiteSpace(Deletebox.Text))
             {
                 MessageBox.Show("введите все требуемые данные данные");
             }
+
+            using var context = new MyDbContext();
+            var item = context.Items?.Where(i => i.InventoryNumber == Deletebox.Text)?.First();
+            context.Items.Remove(item);
+            context.SaveChanges();
+            MessageBox.Show("Товар удалён");
         }
     }
 }
