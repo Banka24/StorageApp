@@ -30,7 +30,7 @@ namespace StorageApp
         {
             using(var context = new MyDbContext())
             {
-                var item = context.Items.Include(i => i.Status).FirstOrDefault(i => i.InventoryNumber == number);
+                var item = context.Items.Include(i => i.Status).Include(i => i.Category).FirstOrDefault(i => i.InventoryNumber == number);
                 return item;
             }
         }
@@ -43,7 +43,7 @@ namespace StorageApp
                 MessageBox.Show("Такого товара нет.\nПерепроверьте инвентарный номер");
                 return;
             }
-            //CategoryBox.Text = item.Category;
+            CategoryBox.Text = item.Category.Name;
             StatusBox.Text = item.Status.Name;
             RowBox.Text = item.Row.ToString();
             ShelfBox.Text = item.Shelf.ToString();
