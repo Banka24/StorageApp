@@ -1,30 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StorageApp
+﻿namespace StorageApp
 {
-    public struct Location
-    {
-        public short row;
-        public short shelf;
-    }
     class Item
     {
-        protected string category;
-        protected string status;
-        protected string inventory_id;
-        protected Location Location;
-
-        public Item(string category, string status, string inventory_id, short row, short shelf)
-        {
-            this.category = category;
-            this.inventory_id = inventory_id;
-            this.status = status;
-            Location.row = row;
-            Location.shelf = shelf;
-        }
+        public int Id { get; set; }
+        public string InventoryNumber { get; set; }
+        public int CategoryId { get; set; }
+        public byte StatusId { get; set; }
+        public int Row { get; set; }
+        public int Shelf { get; set; }
+        public virtual Status Status { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

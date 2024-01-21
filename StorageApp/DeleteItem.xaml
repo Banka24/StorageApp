@@ -8,7 +8,22 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DeleteItem">
 
-    <Grid>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Удаление продукта" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}"/>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Width="600">
+            <TextBlock Text="Инвентарный номер:" Style="{StaticResource TextBlockLarge}" Margin="20,60,10,35"/>
+            <TextBox x:Name="Deletebox" Style="{StaticResource TextBox_Small}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
+            <Button x:Name="DeleteButton"  Click="DeleteButton_Click" Content="Удалить" Style="{StaticResource button_small}" Margin="25, 0"/>
+            <Button Name="Exit" Content="Выход" Style="{StaticResource button_small}" Click="Exit_Click" Margin="25, 0"/>
+        </StackPanel>
+        
         
     </Grid>
 </Page>

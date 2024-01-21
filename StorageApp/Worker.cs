@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StorageApp
+﻿namespace StorageApp
 {
-    class Worker : Person
+    class Worker
     {
-        private string rank;
-        private byte shift;
-        public Worker(string firstName, string lastName, string rank, byte shift) : base(firstName, lastName)
-        {
-            this.rank = rank;
-            this.shift = shift;
-        }
+        public int Id { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public int NameId { get; set; }
+        public int RankId { get; set; }
+        public string OnWork {  get; set; }
+        public virtual Rank Rank { get; set; }
+        public virtual Name Name { get; set; }
     }
 }

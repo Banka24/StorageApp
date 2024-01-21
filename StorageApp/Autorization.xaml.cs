@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Data.SqlClient;
-using System.Data;
+using System.Data.Entity;
 
 namespace StorageApp
 {
@@ -21,63 +10,50 @@ namespace StorageApp
     /// </summary>
     public partial class Autorization : Window
     {
-        SqlDataBase sqlDataBase;
+      
         public Autorization()
         {
             InitializeComponent();
         }
 
-        private void CheckUser(string queryString)
+        private Worker CheckUser(string login, string password)
         {
-            using (var command = new SqlCommand(queryString, sqlDataBase.GetConnection()))
+            using (var context = new MyDbContext())
             {
-                byte result = Convert.ToByte(command.ExecuteScalar());
-                if (result == 1)
+                var user = context.Workers.Include(i => i.Name).SingleOrDefault(i => i.Login == login && i.Password == password);
+                if (user is Worker)
                 {
+                    SharedContext.Name = user.Name.FirstName;
+                    SharedContext.Role = user.RankId;
                     ChangeWindow();
                 }
                 else
                 {
-                    MessageBox.Show("Такого пользователя нет");
+                    MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
                 }
-            }
-        }
+                return user;
 
-        private string CheckString(string str)
-        {
-            if (!String.IsNullOrEmpty(str))
-            {
-                return str;
             }
-            return "NULL";
         }
 
         private void ChangeWindow()
         {
-            MainWindow main = new MainWindow();
-            main.Show();
+            var window = new MainWindow();
+            window.Show();
             Close();
+            
         }
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            string login = CheckString(LoginTextBox.Text);
-            string password = CheckString(MyPassword.Password);
-
-            string queryString = $"SELECT COUNT(*) FROM Worker WHERE Login = '{login}' AND Password = '{password}'";
-            CheckUser(queryString);
-
+            string login = LoginTextBox.Text;
+            string password = MyPassword.Password;
+            CheckUser(login, password);
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            sqlDataBase = new SqlDataBase();
-            sqlDataBase.ConnectionOpen();
         }
     }
 }

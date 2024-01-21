@@ -6,9 +6,36 @@
       xmlns:local="clr-namespace:StorageApp"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddItem">
+      Title="AddItem" Loaded="Page_Loaded">
 
-    <Grid>
-        
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Добавление товара" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TextBlockLarge}"/>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Width="600">
+            <TextBlock Text="Категория" Style="{StaticResource TextBlockSmall}" Margin="0,40,15,45"/>
+            <ComboBox x:Name="Combo" Width="500" Height="40"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center" Text="Порядковый номер:" Style="{StaticResource TextBlockSmall}"/>
+            <TextBox x:Name="NumberItem" Style="{StaticResource TextBox_Small}" Margin="10, 0"/>
+            <TextBlock VerticalAlignment="Center" Text="Номер партии:" Style="{StaticResource TextBlockSmall}"/>
+            <TextBox x:Name="NumberParty" Margin="10, 0" Style="{StaticResource TextBox_Small}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" >
+            <TextBlock VerticalAlignment="Center" Text="Ряд" Style="{StaticResource TextBlockSmall}" Margin="90,0,10,0"/>
+            <TextBox x:Name="RowTextBox" Style="{StaticResource TextBox_Small}"/>
+            <TextBlock VerticalAlignment="Center" Margin="65,0,10,0" Text="Место" Style="{StaticResource TextBlockSmall}"/>
+            <TextBox x:Name="ShelfTextBox" Style="{StaticResource TextBox_Small}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4">
+            <Button Name="add" Content="Добавить" Style="{StaticResource button_small}" Click="Add_Click" Margin="25, 40"/>
+            <Button Name="exit" Content="Выйти" Style="{StaticResource button_small}" Click="Exit_Click" Margin="25, 40"/>
+        </StackPanel>
     </Grid>
 </Page>
