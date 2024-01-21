@@ -25,11 +25,6 @@ namespace StorageApp
         public ReportWorker()
         {
             InitializeComponent();
-
-            PointLabel = chartPoint =>
-            string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-
-            DataContext = this;
         }
 
         private void BackClicked(object sender, RoutedEventArgs e)

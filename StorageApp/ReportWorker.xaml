@@ -3,25 +3,29 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:StorageApp" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:local="clr-namespace:StorageApp" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="810"
       Title="ReportWorker">
 
     <Grid Background="White">
-        <Button Style="{StaticResource button_small}"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right"
-                Margin="0,0,10,10"
-                Content="Назад"
-                Click="BackClicked"/>
-        <lvc:PieChart Name="Diagramma" LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}">
-            <lvc:PieChart.Series>
-                <lvc:PieSeries Name="Series1" Title="Active Worker" Values="3" DataLabels="True"
-                               LabelPoint="{Binding PointLabel}"/>
-                <lvc:PieSeries Name="Series2" Title="Passive Worker" Values="4" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-            </lvc:PieChart.Series>
-        </lvc:PieChart>
+        <ListView Background="Lavender"
+          Width="810"
+          Height="350">
+            <ListView.Resources>
+                <col:ArrayList x:Key="BD"/>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=Login}">Login</GridViewColumn>
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=Password}">Password</GridViewColumn>
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=LastName}">Фамилия</GridViewColumn>
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=FirstName}">Имя</GridViewColumn>
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=RankID}">Должность</GridViewColumn>
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=OnWork}">На работе</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Style="{StaticResource button_small}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" Content="Назад" Click="BackClicked"/>
     </Grid>
 </Page>
