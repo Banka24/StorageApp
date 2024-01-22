@@ -1,7 +1,9 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
 using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -23,12 +25,6 @@ namespace StorageApp
         public ReportItems()
         {
             InitializeComponent();
-
-            PointLabel = chartPoint =>
-            string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-
-            DataContext = this;
-
         }
 
         private void BackClicked(object sender, RoutedEventArgs e)
@@ -40,33 +36,48 @@ namespace StorageApp
 
         private void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {
-            var chart = (PieChart)chartpoint.ChartView;
+            var chart = chartpoint.ChartView as PieChart;
 
             foreach (PieSeries series in chart.Series)
+            {
                 series.PushOut = 0;
+            }
 
-            var selectedSeries = (PieSeries)chartpoint.SeriesView;
+            var selectedSeries = chartpoint.SeriesView as PieSeries;
             selectedSeries.PushOut = 8;
         }
 
-        private void SetValues(int pullItem, int chilItem, int readyItem, int goItem)
+        private async Task SetPieValues()
         {
-            Series2.Values.Add(Convert.ToDouble(pullItem));
-            Series3.Values.Add(Convert.ToDouble(chilItem));
-            Series4.Values.Add(Convert.ToDouble(readyItem));
-            Series5.Values.Add(Convert.ToDouble(goItem));
+            double[] values = await GetPieValues();
+            PieSeries[] series = { Series2,  Series3, Series4, Series5 };
+            for (int i = 0; i < values.Length && i < series.Length; i++)
+            {
+                series[i].Values.Add(values[i]);
+            }
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async Task<double[]> GetPieValues()
         {
-            using (var context = new MyDbContext())
-            {
-                var pullItem = context.Items.Where(i => i.StatusId == (byte)Status.Pull)?.Count() ?? 0;
-                var chilItem = context.Items.Where(i => i.StatusId == (byte)Status.Chill)?.Count() ?? 0;
-                var readyItem = context.Items.Where(i => i.StatusId == (byte)Status.Ready)?.Count() ?? 0;
-                var goItem = context.Items.Where(i => i.StatusId == (byte)Status.Go)?.Count() ?? 0;
-                SetValues(pullItem, chilItem, readyItem, goItem);
-            }
+            using var context = new MyDbContext();
+            double pullItem = await context.Items.Where(i => i.StatusId == (byte)Status.Pull)?.CountAsync();
+            double chilItem = await context.Items.Where(i => i.StatusId == (byte)Status.Chill)?.CountAsync();
+            double readyItem = await context.Items.Where(i => i.StatusId == (byte)Status.Ready)?.CountAsync();
+            double goItem = await context.Items.Where(i => i.StatusId == (byte)Status.Go)?.CountAsync();
+            return [pullItem, chilItem, readyItem, goItem];
+        }
+        
+        private void PrintPie()
+        {
+            PointLabel = chartPoint => $"{chartPoint.Y} ({chartPoint.Participation:P})";
+
+            DataContext = this;
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await SetPieValues();
+            PrintPie();
         }
     }
 }

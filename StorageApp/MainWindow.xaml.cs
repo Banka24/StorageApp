@@ -1,6 +1,8 @@
-﻿using System.Data;
+﻿using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System;
 
 namespace StorageApp
 {
@@ -18,18 +20,6 @@ namespace StorageApp
         public MainWindow()
         {
             InitializeComponent();
-            textName.Text = $"Добрый день, {SharedContext.Name}";
-            switch (SharedContext.Role)
-            {
-                case (int)Role.Administrator:
-                    BtnInfAdmin.Visibility = Visibility.Visible;
-                    BtnGoAdmin.Visibility = Visibility.Visible;
-                    break;
-                case (int)Role.Worker:
-                    BtnInfIt.Visibility = Visibility.Visible;
-                    BtnGoWork.Visibility = Visibility.Visible;
-                    break;
-            }
         }
 
         private void BtnInfIt_Click(object sender, RoutedEventArgs e)
@@ -54,26 +44,61 @@ namespace StorageApp
             Close();
         }
 
-        private void BtnGoWork_Click(object sender, RoutedEventArgs e)
+        private async Task<Worker> GetWorker(MyDbContext context)
         {
-            using var context = new MyDbContext();
-            var worker = context.Workers.Where(i => i.Name.FirstName == SharedContext.Name).SingleOrDefault();
-            if(worker == null)
+            return await context.Workers?.Where(i => i.Name.FirstName == SharedContext.Name)?.SingleOrDefaultAsync();
+        }
+
+        private async Task<Worker> StartWorkShift(MyDbContext context)
+        {
+            var worker = await GetWorker(context);
+
+            if (worker == null)
             {
-                return;
+                return null;
             }
-            if(worker.OnWork == "YES") 
+
+            if (worker.OnWork is "YES")
             {
                 MessageBox.Show("Вы закончили смену");
                 worker.OnWork = "NO";
             }
             else
             {
-            MessageBox.Show("Вы начали смену");
-            worker.OnWork = "YES";
+                MessageBox.Show("Вы начали смену");
+                worker.OnWork = "YES";
             }
+            return worker;
+        }
 
-            context.SaveChanges();
+        private void BtnGoWork_Click(object sender, RoutedEventArgs e)
+        {
+            using var context = new MyDbContext();
+            var worker = StartWorkShift(context);
+            try
+            {
+                context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            textName.Text = $"Добрый день, {SharedContext.Name}";
+            switch (SharedContext.Role)
+            {
+                case (int)Role.Administrator:
+                    BtnInfAdmin.Visibility = Visibility.Visible;
+                    BtnGoAdmin.Visibility = Visibility.Visible;
+                    break;
+                case (int)Role.Worker:
+                    BtnInfIt.Visibility = Visibility.Visible;
+                    BtnGoWork.Visibility = Visibility.Visible;
+                    break;
+            }
         }
     }
 }

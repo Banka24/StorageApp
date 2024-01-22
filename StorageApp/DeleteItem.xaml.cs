@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace StorageApp
 {
@@ -20,18 +23,32 @@ namespace StorageApp
             NavigationService.Navigate(new Editor());
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        private async Task RemoveItem()
+        {
+            using var context = new MyDbContext();
+            var item = await context.Items?.Where(i => i.InventoryNumber == Deletebox.Text)?.FirstAsync();
+            context.Items.Remove(item);
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
+
+            MessageBox.Show("Товар удалён");
+        }
+
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if(string.IsNullOrWhiteSpace(Deletebox.Text))
             {
                 MessageBox.Show("введите все требуемые данные данные");
             }
 
-            using var context = new MyDbContext();
-            var item = context.Items?.Where(i => i.InventoryNumber == Deletebox.Text)?.First();
-            context.Items.Remove(item);
-            context.SaveChanges();
-            MessageBox.Show("Товар удалён");
+            await RemoveItem();
         }
     }
 }

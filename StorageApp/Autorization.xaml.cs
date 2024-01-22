@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace StorageApp
 {
@@ -16,12 +16,12 @@ namespace StorageApp
             InitializeComponent();
         }
 
-        private Worker CheckUser(string login, string password)
+        private async Task<Worker> CheckUser(string login, string password)
         {
             using (var context = new MyDbContext())
             {
-                var user = context.Workers.Include(i => i.Name).SingleOrDefault(i => i.Login == login && i.Password == password);
-                if (user is Worker)
+                var user = await context.Workers.Include(i => i.Name)?.SingleOrDefaultAsync(i => i.Login == login && i.Password == password);
+                if (user is not null)
                 {
                     SharedContext.Name = user.Name.FirstName;
                     SharedContext.Role = user.RankId;
@@ -41,14 +41,13 @@ namespace StorageApp
             var window = new MainWindow();
             window.Show();
             Close();
-            
         }
 
-        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        private async void EnterButton_Click(object sender, RoutedEventArgs e)
         {
             string login = LoginTextBox.Text;
             string password = MyPassword.Password;
-            CheckUser(login, password);
+            await CheckUser(login, password);
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)

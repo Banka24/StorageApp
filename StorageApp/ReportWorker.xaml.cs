@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Data.Entity;
-using System.Linq;
 
 namespace StorageApp
 {
@@ -21,10 +20,10 @@ namespace StorageApp
             NavigationService.Navigate(new Reports());
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
-            var workers = context.Workers.Include(i => i.Name).Include(i => i.Rank).ToList();
+            var workers = await context.Workers.Include(i => i.Name).Include(i => i.Rank).ToListAsync();
             ListWorkers.ItemsSource = workers;
         }
 

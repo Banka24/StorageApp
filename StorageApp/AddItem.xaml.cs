@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 using System.Windows.Navigation;
+using System.Data.Entity;
 
 namespace StorageApp
 {
@@ -22,18 +24,18 @@ namespace StorageApp
             char[] chars = value.ToCharArray();
             foreach (char c in chars)
             {
-                flag = char.IsDigit(c) ? true : false;
+                flag = char.IsDigit(c);
             }
             return flag;
         }
 
-        private Item MakeItem() 
+        private async Task<Item> MakeItem() 
         {
             using var context = new MyDbContext();
             var item = new Item
             {
                 InventoryNumber = $"{NumberItem.Text}{NumberParty.Text}{DateTime.Now.ToString("ddMMyyyy")}",
-                CategoryId = context.Categorys.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefault(),
+                CategoryId = await context.Categorys?.Where(i => i.Name == Combo.Text)?.Select(i => i.Id).FirstOrDefaultAsync(),
                 StatusId = 1,
                 Row = Convert.ToInt32(RowTextBox.Text),
                 Shelf = Convert.ToInt32(ShelfTextBox.Text),
@@ -42,7 +44,7 @@ namespace StorageApp
             return item;
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e)
+        private async void Add_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Combo.Text))
             {
@@ -62,12 +64,19 @@ namespace StorageApp
                 return;
             }
 
-            Item item = MakeItem();
+            var item = MakeItem();
 
             using var context = new MyDbContext();
-            context.Items.Add(item);
-            context.SaveChanges();
-            MessageBox.Show("Товар добавлен");
+            context.Items.Add(await item);
+            try
+            {
+                context.SaveChanges();
+                MessageBox.Show("Товар добавлен");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -77,13 +86,11 @@ namespace StorageApp
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            using(var context = new MyDbContext())
+            using var context = new MyDbContext();
+            string[] items = context.Categorys.Select(i => i.Name).ToArray();
+            foreach (var item in items)
             {
-                string[] items = context.Categorys.Select(i => i.Name).ToArray();
-                foreach (var item in items)
-                {
-                    Combo.Items.Add(item);
-                }
+                Combo.Items.Add(item);
             }
         }
     }

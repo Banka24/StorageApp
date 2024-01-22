@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Data.Entity;
@@ -15,18 +15,16 @@ namespace StorageApp
             InitializeComponent();
         }
 
-        private Item GetInfo(string number)
+        private async Task<Item> GetInfo(string number)
         {
-            using(var context = new MyDbContext())
-            {
-                var item = context.Items.Include(i => i.Status).Include(i => i.Category).FirstOrDefault(i => i.InventoryNumber == number);
-                return item;
-            }
+            var context = new MyDbContext();
+            var item = await context.Items.Include(i => i.Status).Include(i => i.Category)?.FirstOrDefaultAsync(i => i.InventoryNumber == number);
+            return item;
         }
 
-        private void OKButton_Click(object sender, RoutedEventArgs e)
+        private async void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            var item = GetInfo(InventoryBox.Text);
+            var item = await GetInfo(InventoryBox.Text);
             if(item is null)
             {
                 MessageBox.Show("Такого товара нет.\nПерепроверьте инвентарный номер");

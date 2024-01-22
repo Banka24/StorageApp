@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace StorageApp
 {
@@ -17,9 +18,9 @@ namespace StorageApp
             InitializeComponent();
         }
 
-        private Item GetItem(MyDbContext context)
+        private async Task<Item> GetItem(MyDbContext context)
         {
-            var item = context.Items.Include(i => i.Status).Include(i => i.Category).FirstOrDefault(i => i.InventoryNumber == InventoryNumberTextBox.Text);
+            var item = await context.Items.Include(i => i.Status).Include(i => i.Category).FirstOrDefaultAsync(i => i.InventoryNumber == InventoryNumberTextBox.Text);
             if (item == null)
             {
                 MessageBox.Show("Такого товара нет.\nПроверьте инвентарный номер.");
@@ -27,56 +28,62 @@ namespace StorageApp
             return item;
         }
 
-        private void EditInfo()
+        private void PushItem()
         {
             using var context = new MyDbContext();
-            Item item = GetItem(context);
-            if (item is not null)
+            var item = EditInfo(context);
+            context.SaveChanges();
+            MessageBox.Show("Замена проведена успешно");
+        }
+
+        private async Task EditInfo(MyDbContext context)
+        {
+            var item = await GetItem(context);
+
+            if (item is null)
             {
-                switch (Combo.Text)
-                {
-                    case "Row":
-                        if (!int.TryParse(Data.Text, out int row))
-                        {
-                            MessageBox.Show("Введите число");
-                            return;
-                        }
-                        item.Row = row;
-                        break;
-                    case "Shelf":
-                        if (!int.TryParse(Data.Text, out int shelf))
-                        {
-                            MessageBox.Show("Введите число");
-                            return;
-                        }
-                        item.Shelf = shelf;
-                        break;
-                    case "Category":
-                        if (!string.IsNullOrWhiteSpace(ComboCategory.Text))
-                        {
-                            int? categoryId = context.Categorys.Where(i => i.Name == ComboCategory.Text)?.FirstOrDefault().Id;
-                            if(categoryId is not null)
-                            {
-                                item.CategoryId = (int)categoryId;
-                            }
-                        }
-                        break;
-                    case "Status":
-                        if (!string.IsNullOrWhiteSpace(ComboCategory.Text))
-                        {
-                            int? statusId = context.Status.Where(i => i.Name == ComboCategory.Text)?.FirstOrDefault().Id;
-                            if (statusId is not null)
-                            {
-                                item.StatusId = (byte)statusId;
-                            }
-                        }
-                        break;
-                    default:
-                        MessageBox.Show("Произошла ошибка.\nЯ не знаю такой операции.\nВозможно это добавиться в обновлениях.");
+                return;
+            }
+
+            switch (Combo.Text)
+            {
+                case "Row":
+                    if (!int.TryParse(Data.Text, out int row))
+                    {
+                        MessageBox.Show("Введите число");
                         return;
-                }
-                context.SaveChanges();
-                MessageBox.Show("Замена проведена успешно");
+                    }
+                    item.Row = row;
+                    break;
+                case "Shelf":
+                    if (!int.TryParse(Data.Text, out int shelf))
+                    {
+                        MessageBox.Show("Введите число");
+                        return;
+                    }
+                    item.Shelf = shelf;
+                    break;
+                case "Category":
+
+                    int? categoryId = context.Categorys.Where(i => i.Name == ComboCategory.Text)?.FirstOrDefaultAsync().Id;
+
+                    if(categoryId is not null)
+                    {
+                        item.CategoryId = (int)categoryId;
+                    }
+                    break;
+                case "Status":
+                    int? statusId = context.Status?.Where(i => i.Name == ComboCategory.Text)?.FirstOrDefaultAsync().Id;
+
+                    if (statusId is not null)
+                    {
+                        item.StatusId = (byte)statusId;
+                    }
+
+                    break;
+                default:
+                    MessageBox.Show("Произошла ошибка.\nЯ не знаю такой операции.\nВозможно это добавиться в обновлениях.");
+                    return;
             }
         }
 
@@ -87,7 +94,8 @@ namespace StorageApp
                 MessageBox.Show("введите все требуемые данные данные");
                 return;
             }
-            EditInfo();
+
+            PushItem();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
