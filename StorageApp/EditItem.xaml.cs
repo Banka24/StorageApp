@@ -28,22 +28,17 @@ namespace StorageApp
             return item;
         }
 
-        private void PushItem()
+        private async Task PushItem()
         {
             using var context = new MyDbContext();
-            var item = EditInfo(context);
+            var item = await EditInfo(context);
             context.SaveChanges();
             MessageBox.Show("Замена проведена успешно");
         }
 
-        private async Task EditInfo(MyDbContext context)
+        private async Task<Item> EditInfo(MyDbContext context)
         {
             var item = await GetItem(context);
-
-            if (item is null)
-            {
-                return;
-            }
 
             switch (Combo.Text)
             {
@@ -51,7 +46,6 @@ namespace StorageApp
                     if (!int.TryParse(Data.Text, out int row))
                     {
                         MessageBox.Show("Введите число");
-                        return;
                     }
                     item.Row = row;
                     break;
@@ -59,12 +53,10 @@ namespace StorageApp
                     if (!int.TryParse(Data.Text, out int shelf))
                     {
                         MessageBox.Show("Введите число");
-                        return;
                     }
                     item.Shelf = shelf;
                     break;
                 case "Category":
-
                     int? categoryId = context.Categorys.Where(i => i.Name == ComboCategory.Text)?.FirstOrDefaultAsync().Id;
 
                     if(categoryId is not null)
@@ -79,15 +71,12 @@ namespace StorageApp
                     {
                         item.StatusId = (byte)statusId;
                     }
-
                     break;
-                default:
-                    MessageBox.Show("Произошла ошибка.\nЯ не знаю такой операции.\nВозможно это добавиться в обновлениях.");
-                    return;
             }
+            return item;
         }
 
-        private void Redact_Click(object sender, RoutedEventArgs e)
+        private async void Redact_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Data.Text) && Data.IsEnabled is true || string.IsNullOrWhiteSpace(Combo.Text) || string.IsNullOrWhiteSpace(InventoryNumberTextBox.Text))
             {
@@ -95,7 +84,7 @@ namespace StorageApp
                 return;
             }
 
-            PushItem();
+            await PushItem();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -105,14 +94,12 @@ namespace StorageApp
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            using (var context = new MyDbContext())
+            using var context = new MyDbContext();
+            string[] columns = { "Id", "InventoryNumber", "StatusId", "CategoryId" };
+            string[] categories = typeof(Item).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
+            foreach (var category in categories)
             {
-                string[] columns = { "Id", "InventoryNumber", "StatusId", "CategoryId" };
-                string[] categories = typeof(Item).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
-                foreach (var category in categories)
-                {
-                    Combo.Items.Add(category);
-                }
+                Combo.Items.Add(category);
             }
         }
 

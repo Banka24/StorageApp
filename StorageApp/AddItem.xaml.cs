@@ -64,10 +64,10 @@ namespace StorageApp
                 return;
             }
 
-            var item = MakeItem();
+            var item = await MakeItem();
 
             using var context = new MyDbContext();
-            context.Items.Add(await item);
+            context.Items.Add(item);
             try
             {
                 context.SaveChanges();

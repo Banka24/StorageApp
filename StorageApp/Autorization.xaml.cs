@@ -18,22 +18,19 @@ namespace StorageApp
 
         private async Task<Worker> CheckUser(string login, string password)
         {
-            using (var context = new MyDbContext())
+            var context = new MyDbContext();
+            var user = await context.Workers.Include(i => i.Name)?.SingleOrDefaultAsync(i => i.Login == login && i.Password == password);
+            if (user is not null)
             {
-                var user = await context.Workers.Include(i => i.Name)?.SingleOrDefaultAsync(i => i.Login == login && i.Password == password);
-                if (user is not null)
-                {
-                    SharedContext.Name = user.Name.FirstName;
-                    SharedContext.Role = user.RankId;
-                    ChangeWindow();
-                }
-                else
-                {
-                    MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
-                }
-                return user;
-
+                SharedContext.Name = user.Name.FirstName;
+                SharedContext.Role = user.RankId;
+                ChangeWindow();
             }
+            else
+            {
+                MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
+            }
+            return user;
         }
 
         private void ChangeWindow()
