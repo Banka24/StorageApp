@@ -125,6 +125,11 @@
     </Compile>
     <Compile Include="SharedContext.cs" />
     <Compile Include="Status.cs" />
+    <Compile Include="storageDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>storageDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Worker.cs" />
     <Page Include="AddItem.xaml">
       <SubType>Designer</SubType>
@@ -215,6 +220,17 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="storageDataSet.xsc">
+      <DependentUpon>storageDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="storageDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>storageDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="storageDataSet.xss">
+      <DependentUpon>storageDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
