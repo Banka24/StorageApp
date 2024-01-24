@@ -99,6 +99,9 @@
       <DependentUpon>Autorization.xaml</DependentUpon>
     </Compile>
     <Compile Include="Category.cs" />
+    <Compile Include="EditServer.xaml.cs">
+      <DependentUpon>EditServer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InfoItem.xaml.cs">
       <DependentUpon>InfoItem.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,9 @@
     <Compile Include="MyDbContext.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="Rank.cs" />
+    <Compile Include="Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ReportItems.xaml.cs">
       <DependentUpon>ReportItems.xaml</DependentUpon>
     </Compile>
@@ -152,6 +158,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EditServer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InfoItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -180,6 +190,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Registration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ReportItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
