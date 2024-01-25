@@ -32,7 +32,7 @@ namespace StorageApp
         {
             using var context = new MyDbContext();
             var item = await EditInfo(context);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             MessageBox.Show("Замена проведена успешно");
         }
 

@@ -58,7 +58,7 @@ namespace StorageApp
                 return null;
             }
 
-            if (worker.OnWork is "YES")
+            if (worker.OnWork == "YES")
             {
                 MessageBox.Show("Вы закончили смену");
                 worker.OnWork = "NO";
@@ -71,13 +71,13 @@ namespace StorageApp
             return worker;
         }
 
-        private void BtnGoWork_Click(object sender, RoutedEventArgs e)
+        private async void BtnGoWork_Click(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
-            var worker = StartWorkShift(context);
+            var worker = await StartWorkShift(context);
             try
             {
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             catch(Exception ex)
             {
