@@ -81,7 +81,7 @@ namespace StorageApp
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}");
+                await FileLogs.WriteLog(ex);
             }
         }
 

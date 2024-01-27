@@ -102,6 +102,7 @@
     <Compile Include="EditServer.xaml.cs">
       <DependentUpon>EditServer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileLogs.cs" />
     <Compile Include="InfoItem.xaml.cs">
       <DependentUpon>InfoItem.xaml</DependentUpon>
     </Compile>
