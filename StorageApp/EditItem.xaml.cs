@@ -125,7 +125,7 @@ namespace StorageApp
 
         private void ComboCategory_GotMouseCapture(object sender, MouseEventArgs e)
         {
-            ComboCategory.Items.Clear();
+            ComboCategory.Items?.Clear();
             using var context = new MyDbContext();
             switch (Combo.Text)
             {
