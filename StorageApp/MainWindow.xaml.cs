@@ -100,5 +100,15 @@ namespace StorageApp
                     break;
             }
         }
+
+        private void Registration_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Sett_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
