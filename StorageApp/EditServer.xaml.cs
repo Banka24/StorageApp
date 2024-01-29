@@ -24,5 +24,15 @@ namespace StorageApp
         {
             InitializeComponent();
         }
+
+        private void AcButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CanellBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
