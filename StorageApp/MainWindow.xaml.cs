@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System;
+using System.Windows.Controls;
 
 namespace StorageApp
 {
@@ -91,12 +92,19 @@ namespace StorageApp
             switch (SharedContext.Role)
             {
                 case (int)Role.Administrator:
-                    BtnInfAdmin.Visibility = Visibility.Visible;
-                    BtnGoAdmin.Visibility = Visibility.Visible;
+                    Button[] adminButtons = [BtnInfAdmin, BtnGoAdmin, RegistrationButton, SettingServerButton];
+                    foreach (var button in adminButtons)
+                    {
+                        button.Visibility = Visibility.Visible;
+                    }
                     break;
+
                 case (int)Role.Worker:
-                    BtnInfIt.Visibility = Visibility.Visible;
-                    BtnGoWork.Visibility = Visibility.Visible;
+                    Button[] workerButtons = [BtnInfIt, BtnGoWork];
+                    foreach (var button in workerButtons)
+                    {
+                        button.Visibility = Visibility.Visible;
+                    }
                     break;
             }
         }
