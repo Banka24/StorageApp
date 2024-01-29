@@ -20,7 +20,7 @@
         <TextBlock Text="Введите имя БД" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Margin="42,0,0,0"/>
         <TextBox x:Name="AddressBox" Grid.Row="1" HorizontalAlignment="Left" Style="{StaticResource TextBox_Small}" Margin="425,38,0,39"/>
         <TextBox x:Name="DataBox" Grid.Row="2" HorizontalAlignment="Left" Style="{StaticResource TextBox_Small}" Margin="425,39,0,38"/>
-        <Button x:Name="AcButton" Content="Принять" Grid.Row="3" Height="40" Width="150" Margin="199,36,451,36" Click="AcButton_Click" Style="{StaticResource button_small}"/>
-        <Button x:Name="CanellBtn" Content="Отмена" Grid.Row="3" Height="40" Width="150" Margin="492,36,158,36" Click="CanellBtn_Click"  Style="{StaticResource button_small}"/>
+        <Button x:Name="AcButton" Content="Принять" Grid.Row="3" Margin="199,36,451,36" Click="AcButton_Click" Style="{StaticResource button_small}"/>
+        <Button x:Name="CanellBtn" Content="Отмена" Grid.Row="3" Margin="492,36,158,36" Click="CanellBtn_Click"  Style="{StaticResource button_small}"/>
     </Grid>
 </Page>
