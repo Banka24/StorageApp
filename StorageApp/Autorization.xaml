@@ -25,6 +25,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3">
             <Button Name="EnterButton" Content="Войти" Style="{StaticResource button_small}" Click="EnterButton_Click" Margin="25, 0"/>
             <Button Name="ExitButton" Content="Выйти" Style="{StaticResource button_small}" Click="ExitButton_Click" Margin="25, 0"/>
+            <Button Name="SettingServerBtn" Grid.Row="4" Content="Настройка сервера" Width="150" Style="{StaticResource button_small}"  Margin="25, 0" Click="SettingServerBtn_Click"/>
         </StackPanel>
     </Grid>
 </Window>

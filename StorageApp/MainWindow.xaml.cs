@@ -80,7 +80,7 @@ namespace StorageApp
             {
                 await context.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await FileLogs.WriteLog(ex);
             }
@@ -92,7 +92,7 @@ namespace StorageApp
             switch (SharedContext.Role)
             {
                 case (int)Role.Administrator:
-                    Button[] adminButtons = [BtnInfAdmin, BtnGoAdmin, RegistrationBtn, SettingServerBtn];
+                    Button[] adminButtons = [BtnInfAdmin, BtnGoAdmin, RegistrationBtn];
                     foreach (var button in adminButtons)
                     {
                         button.Visibility = Visibility.Visible;
@@ -112,11 +112,6 @@ namespace StorageApp
         private void RegistrationBtn_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(new Registration());
-        }
-
-        private void SettingServerBtn_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new EditServer());
         }
     }
 }

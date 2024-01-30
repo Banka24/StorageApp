@@ -12,7 +12,6 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Name="textName" Text="" TextAlignment="Center" Style="{StaticResource TextBlockLarge}" VerticalAlignment="Center"/>
         <Button Name="Logout" Content="Выйти" Style="{StaticResource button_small}" HorizontalAlignment="Right" Margin="25, 0" Click="Logout_Click"/>
@@ -21,7 +20,6 @@
         <Button Name="BtnGoWork" Grid.Row="3" Content="начать(закончить) смену" Style="{StaticResource button_small}" Visibility="Hidden" Width="200" Click="BtnGoWork_Click"/>
         <Button Name="BtnGoAdmin" Content="Отчеты" Grid.Row="2" Style="{StaticResource button_small}" Visibility="Hidden" Width="200" Click="BtnGoAdmin_Click"/>
         <Button Name="RegistrationBtn" Grid.Row="3" Content="Регестрация рабочего" Width="200" Style="{StaticResource button_small}" Click="RegistrationBtn_Click" Visibility="Hidden"/>
-        <Button Name="SettingServerBtn" Grid.Row="4" Content="Настройка сервера" Width="200" Style="{StaticResource button_small}" Click="SettingServerBtn_Click" Visibility="Hidden"/>
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.RowSpan="5"/>
+        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.RowSpan="4"/>
     </Grid>
 </Window>

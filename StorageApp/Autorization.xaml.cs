@@ -51,5 +51,11 @@ namespace StorageApp
         {
             Environment.Exit(0);
         }
+
+        private void SettingServerBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Content = new EditServer();
+            Show();
+        }
     }
 }
