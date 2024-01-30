@@ -70,12 +70,12 @@ namespace StorageApp
             context.Items.Add(item);
             try
             {
-                context.SaveChanges();
+                await context.SaveChangesAsync();
                 MessageBox.Show("Товар добавлен");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}");
+                await FileLogs.WriteLog(ex);
             }
         }
 

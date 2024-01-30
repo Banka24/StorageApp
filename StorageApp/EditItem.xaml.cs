@@ -32,7 +32,7 @@ namespace StorageApp
         {
             using var context = new MyDbContext();
             var item = await EditInfo(context);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             MessageBox.Show("Замена проведена успешно");
         }
 
@@ -95,7 +95,7 @@ namespace StorageApp
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
-            string[] columns = { "Id", "InventoryNumber", "StatusId", "CategoryId" };
+            string[] columns = ["Id", "InventoryNumber", "StatusId", "CategoryId"];
             string[] categories = typeof(Item).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
             foreach (var category in categories)
             {
@@ -125,16 +125,16 @@ namespace StorageApp
 
         private void ComboCategory_GotMouseCapture(object sender, MouseEventArgs e)
         {
-            ComboCategory.Items.Clear();
+            ComboCategory.Items?.Clear();
             using var context = new MyDbContext();
             switch (Combo.Text)
             {
                 case "Status":
-                    string[] statuses = context.Status.Select(i => i.Name).ToArray();
+                    string[] statuses = context.Status?.Select(i => i.Name).ToArray();
                     AddItems(statuses);
                     break;
                 case "Category":
-                    string[] categories = context.Categorys.Select(i => i.Name).ToArray();
+                    string[] categories = context.Categorys?.Select(i => i.Name).ToArray();
                     AddItems(categories);
                     break;
             }

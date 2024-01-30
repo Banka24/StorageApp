@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System;
+using System.Windows.Controls;
 
 namespace StorageApp
 {
@@ -58,7 +59,7 @@ namespace StorageApp
                 return null;
             }
 
-            if (worker.OnWork is "YES")
+            if (worker.OnWork == "YES")
             {
                 MessageBox.Show("Вы закончили смену");
                 worker.OnWork = "NO";
@@ -71,17 +72,17 @@ namespace StorageApp
             return worker;
         }
 
-        private void BtnGoWork_Click(object sender, RoutedEventArgs e)
+        private async void BtnGoWork_Click(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
-            var worker = StartWorkShift(context);
+            var worker = await StartWorkShift(context);
             try
             {
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}");
+                await FileLogs.WriteLog(ex);
             }
         }
 
@@ -91,14 +92,31 @@ namespace StorageApp
             switch (SharedContext.Role)
             {
                 case (int)Role.Administrator:
-                    BtnInfAdmin.Visibility = Visibility.Visible;
-                    BtnGoAdmin.Visibility = Visibility.Visible;
+                    Button[] adminButtons = [BtnInfAdmin, BtnGoAdmin, RegistrationButton, SettingServerButton];
+                    foreach (var button in adminButtons)
+                    {
+                        button.Visibility = Visibility.Visible;
+                    }
                     break;
+
                 case (int)Role.Worker:
-                    BtnInfIt.Visibility = Visibility.Visible;
-                    BtnGoWork.Visibility = Visibility.Visible;
+                    Button[] workerButtons = [BtnInfIt, BtnGoWork];
+                    foreach (var button in workerButtons)
+                    {
+                        button.Visibility = Visibility.Visible;
+                    }
                     break;
             }
+        }
+
+        private void Registration_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Sett_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

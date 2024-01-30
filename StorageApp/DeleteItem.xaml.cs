@@ -31,11 +31,11 @@ namespace StorageApp
 
             try
             {
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}");
+                await FileLogs.WriteLog(ex);
             }
 
             MessageBox.Show("Товар удалён");

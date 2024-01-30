@@ -23,7 +23,7 @@ namespace StorageApp
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
-            var workers = await context.Workers.Include(i => i.Name).Include(i => i.Rank).ToListAsync();
+            var workers = await context.Workers?.Include(i => i.Name)?.Include(i => i.Rank).ToListAsync();
             ListWorkers.ItemsSource = workers;
         }
 
