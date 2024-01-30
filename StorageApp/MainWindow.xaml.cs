@@ -92,7 +92,7 @@ namespace StorageApp
             switch (SharedContext.Role)
             {
                 case (int)Role.Administrator:
-                    Button[] adminButtons = [BtnInfAdmin, BtnGoAdmin, RegistrationButton, SettingServerButton];
+                    Button[] adminButtons = [BtnInfAdmin, BtnGoAdmin, RegistrationBtn, SettingServerBtn];
                     foreach (var button in adminButtons)
                     {
                         button.Visibility = Visibility.Visible;
@@ -109,14 +109,14 @@ namespace StorageApp
             }
         }
 
-        private void Registration_Click(object sender, RoutedEventArgs e)
+        private void RegistrationBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MainFrame.Navigate(new Registration());
         }
 
-        private void Sett_Click(object sender, RoutedEventArgs e)
+        private void SettingServerBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MainFrame.Navigate(new EditServer());
         }
     }
 }
