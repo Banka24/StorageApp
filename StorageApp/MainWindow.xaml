@@ -17,7 +17,7 @@
         <Button Name="Logout" Content="Выйти" Style="{StaticResource button_small}" HorizontalAlignment="Right" Margin="25, 0" Click="Logout_Click"/>
         <Button Name="BtnInfIt" Content="информация о товаре" Grid.Row="1" Style="{StaticResource button_small}" Width="200" Visibility="Hidden" Click="BtnInfIt_Click"/>
         <Button Name="BtnInfAdmin" Content="Редактор товаров" Grid.Row="1" Style="{StaticResource button_small}" Width="200" Visibility="Hidden" Click="BtnInfIt_Click_1"/>
-        <Button Name="BtnGoWork"  Content="начать(закончить) смену" Grid.Row="2" Style="{StaticResource button_small}" Visibility="Hidden" Width="200" Click="BtnGoWork_Click"/>
+        <Button Name="BtnGoWork" Grid.Row="3" HorizontalAlignment="Left" Margin="25,0,0,0" Content="начать(закончить) смену" Style="{StaticResource button_small}" Visibility="Hidden" Width="200" Click="BtnGoWork_Click"/>
         <Button Name="BtnGoAdmin"  Content="Отчеты" Grid.Row="2" Style="{StaticResource button_small}" Visibility="Hidden" Width="200" Click="BtnGoAdmin_Click"/>
         <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.RowSpan="4"/>
     </Grid>
