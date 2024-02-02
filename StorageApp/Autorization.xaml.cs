@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace StorageApp
 {
@@ -14,6 +16,24 @@ namespace StorageApp
         public Autorization()
         {
             InitializeComponent();
+        }
+
+        private Worker CheckZeroUser(string login, string password)
+        {
+            var jsonFile = File.ReadAllText(@"D:\\learn\\C#\\MyPracticWork\\StorageApp\\StorageApp\\zeroUser.json");
+            var jsonObject = JObject.Parse(jsonFile);
+
+            if (jsonObject.TryGetValue("Login", out var value) && value.ToString() == login && jsonObject.TryGetValue("Password", out var value1) && value1.ToString() == password)
+            {
+                var worker = new Worker
+                {
+                    Login = login,
+                    Password = password,
+                };
+                return worker;
+            }
+
+            return null;
         }
 
         private async Task<Worker> CheckUser(string login, string password)
@@ -29,6 +49,7 @@ namespace StorageApp
                 MessageBox.Show("Произошла ошибка, проверьте логи");
                 await FileLogs.WriteLog(ex);
             }
+
             if (user is not null)
             {
                 SharedContext.Name = user.Name.FirstName;
@@ -37,7 +58,18 @@ namespace StorageApp
             }
             else
             {
-                MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
+                user = CheckZeroUser(login, password);
+
+                if (user is not null)
+                {
+                    SharedContext.Role = 1;
+                    SharedContext.Name = "Админ";
+                    ChangeWindow();
+                }
+                else
+                {
+                    MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
+                }
             }
             return user;
         }

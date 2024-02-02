@@ -100,7 +100,7 @@ namespace StorageApp
 
         private async void AcButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] getElements = [LogBox.Text, PassBox.Password, SurBox.Text, NameBox.Name, RankBox.Text];
+            string[] getElements = [LogBox.Text, PassBox.Password, SurBox.Text, NameBox.Text, RankBox.Text];
             if (CheckData(getElements) is null)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
