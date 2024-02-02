@@ -19,7 +19,16 @@ namespace StorageApp
         private async Task<Worker> CheckUser(string login, string password)
         {
             var context = new MyDbContext();
-            var user = await context.Workers.Include(i => i.Name)?.SingleOrDefaultAsync(i => i.Login == login && i.Password == password);
+            Worker user = null;
+            try
+            {
+                user = await context.Workers.Include(i => i.Name)?.SingleOrDefaultAsync(i => i.Login == login && i.Password == password);
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show("Произошла ошибка, проверьте логи");
+                await FileLogs.WriteLog(ex);
+            }
             if (user is not null)
             {
                 SharedContext.Name = user.Name.FirstName;

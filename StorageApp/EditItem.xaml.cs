@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -32,8 +33,16 @@ namespace StorageApp
         {
             using var context = new MyDbContext();
             var item = await EditInfo(context);
-            await context.SaveChangesAsync();
-            MessageBox.Show("Замена проведена успешно");
+            try
+            {
+                await context.SaveChangesAsync();
+                MessageBox.Show("Замена проведена успешно");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Произошла ошибка, проверьте логи.");
+                await FileLogs.WriteLog(ex);
+            }
         }
 
         private async Task<Item> EditInfo(MyDbContext context)

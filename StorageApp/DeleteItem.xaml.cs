@@ -32,13 +32,13 @@ namespace StorageApp
             try
             {
                 await context.SaveChangesAsync();
+                MessageBox.Show("Товар удалён");
             }
             catch(Exception ex)
             {
                 await FileLogs.WriteLog(ex);
             }
 
-            MessageBox.Show("Товар удалён");
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)

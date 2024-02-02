@@ -10,7 +10,7 @@ namespace StorageApp
 
         public static async Task WriteLog(Exception ex)
         { 
-            await Task.Run(() => { File.AppendAllText(path, $"{DateTime.Now} в объекте {ex.Source} произошла ошибка: {ex.Message}.\nТрассировка стека:{ex.StackTrace}."); });
+            await Task.Run(() => { File.AppendAllText(path, $"{DateTime.Now} в объекте {ex.Source} произошла ошибка: {ex.Message}.\nТрассировка стека:{ex.StackTrace}.\n\n"); });
         }
            
     }
