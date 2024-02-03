@@ -281,6 +281,9 @@
   <ItemGroup>
     <Resource Include="Images\Update.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="StorageAppLogs.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
