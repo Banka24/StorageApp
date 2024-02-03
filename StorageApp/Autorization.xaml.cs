@@ -85,7 +85,7 @@ namespace StorageApp
         {
             string login = LoginTextBox.Text;
             string password = MyPassword.Password;
-            await CheckUser(login, password);
+            await Task.Run(() => CheckUser(login, password));
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
