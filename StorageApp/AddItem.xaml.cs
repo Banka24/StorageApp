@@ -75,6 +75,7 @@ namespace StorageApp
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Произошла ошибка, проверьте логи.");
                 await FileLogs.WriteLog(ex);
             }
         }
