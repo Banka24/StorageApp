@@ -46,7 +46,7 @@ namespace StorageApp
             }
             catch(Exception ex) 
             {
-                MessageBox.Show("Произошла ошибка, проверьте логи");
+                MessageBox.Show("Произошла ошибка, проверьте настройки подключения к сети и проверьте логи");
                 await FileLogs.WriteLog(ex);
             }
 
