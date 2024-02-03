@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace StorageApp
 {
@@ -85,14 +86,12 @@ namespace StorageApp
         {
             string login = LoginTextBox.Text;
             string password = MyPassword.Password;
-            await Task.Run(() => CheckUser(login, password));
+            await CheckUser(login, password);
         }
-
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
         }
-
         private void SettingServerBtn_Click(object sender, RoutedEventArgs e)
         {
             Content = new EditServer();

@@ -34,6 +34,6 @@
         <ComboBox Name="RankBox" Grid.Row="5" Margin="340, 0, 200, 0" Width="250" Height="40" />
         <Button x:Name="AcButton" Content="Принять" Grid.Row="6" Height="40" Width="150" HorizontalAlignment="Left" Style="{StaticResource button_small}" Margin="192,12,0,12" Click="AcButton_Click"/>
         <Button x:Name="CanellButton" Content="Отмена" Grid.Row="6" Height="40" Width="150" HorizontalAlignment="Left" Style="{StaticResource button_small}" Margin="452,12,0,12" Click="CanellButton_Click"/>
-        <Button x:Name="BtnAdd" Content ="Добавить нового пользователя" HorizontalAlignment ="Right" Grid.Row="5" Margin="2,2,2,2" />
+        <Button x:Name="BtnAdd" Content="Добавить нового пользователя" HorizontalAlignment="Right" Grid.Row="5" Margin="2" Click="BtnAdd_Click"/>
     </Grid>
 </Page>

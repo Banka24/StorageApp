@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System;
+using System.Windows.Controls;
 
 namespace StorageApp
 {
@@ -79,7 +80,7 @@ namespace StorageApp
             {
                 await context.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await FileLogs.WriteLog(ex);
             }
@@ -91,24 +92,26 @@ namespace StorageApp
             switch (SharedContext.Role)
             {
                 case (int)Role.Administrator:
-                    BtnInfAdmin.Visibility = Visibility.Visible;
-                    BtnGoAdmin.Visibility = Visibility.Visible;
+                    Button[] adminButtons = [BtnInfAdmin, BtnGoAdmin, RegistrationBtn];
+                    foreach (var button in adminButtons)
+                    {
+                        button.Visibility = Visibility.Visible;
+                    }
                     break;
+
                 case (int)Role.Worker:
-                    BtnInfIt.Visibility = Visibility.Visible;
-                    BtnGoWork.Visibility = Visibility.Visible;
+                    Button[] workerButtons = [BtnInfIt, BtnGoWork];
+                    foreach (var button in workerButtons)
+                    {
+                        button.Visibility = Visibility.Visible;
+                    }
                     break;
             }
         }
 
-        private void Registration_Click(object sender, RoutedEventArgs e)
+        private void RegistrationBtn_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void Sett_Click(object sender, RoutedEventArgs e)
-        {
-
+            MainFrame.Navigate(new Registration());
         }
     }
 }

@@ -31,7 +31,7 @@ namespace StorageApp
 
         private Worker MakeWorker(in string[] data, in int nameId)
         {
-            Worker worker = new Worker
+            var worker = new Worker()
             {
                 Login = data[0],
                 Password = data[1],
@@ -127,6 +127,11 @@ namespace StorageApp
             {
                 RankBox.Items.Add(item);
             }
+        }
+
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddRole());
         }
     }
 }
