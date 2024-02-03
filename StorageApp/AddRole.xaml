@@ -8,7 +8,25 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddRole">
 
-    <Grid>
-        
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Добавление должности" HorizontalAlignment="Center" Style="{StaticResource TextBlockLarge}"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Height="40">
+            <TextBlock Text ="Название" Style="{StaticResource TextBlockSmall}" Margin="0,0,100,0" VerticalAlignment="Center"/>
+            <TextBox Width="250" Name="BoxNAme" Style="{StaticResource TextBox_Small}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Height="40">
+            <TextBlock Text ="Root-права" Style="{StaticResource TextBlockSmall}" Margin="0,0,100,0" VerticalAlignment="Center"/>
+            <ComboBox Width="250" Name="RootBox"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Height="40">
+            <Button Content="Добавить" Margin="0,0,100,0" Width="150" Style="{StaticResource button_small}"/>
+            <Button Content="Отмена" Width="150" Style="{StaticResource button_small}"/>
+        </StackPanel>
     </Grid>
 </Page>
