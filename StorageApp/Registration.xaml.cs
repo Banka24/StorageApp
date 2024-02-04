@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Linq;
 
 namespace StorageApp
@@ -9,24 +8,19 @@ namespace StorageApp
     /// <summary>
     /// Логика взаимодействия для Registration.xaml
     /// </summary>
-    public partial class Registration : Page
+    public partial class Registration
     {
         public Registration()
         {
             InitializeComponent();
         }
 
-        private string[] CheckData(in string[] strings)
+        private static string[] CheckData(in string[] strings)
         {
-            foreach (string s in strings)
-            {
-                if (string.IsNullOrWhiteSpace(s))
-                {
-                    MessageBox.Show("Введено некорректное значение");
-                    return null;
-                }
-            }
-            return strings;
+            if (!strings.Any(string.IsNullOrWhiteSpace)) return strings;
+            MessageBox.Show("Введено некорректное значение");
+            return null;
+
         }
 
         private Worker MakeWorker(in string[] data, in int nameId)
@@ -43,19 +37,15 @@ namespace StorageApp
             return worker;
         }
 
-        private int GetRankId(string rank)
+        private static int GetRankId(string rank)
         {
-            switch (rank)
+            return rank switch
             {
-                case "Administrator":
-                    return 1;
-                case "Supervisior":
-                    return 2;
-                case "Worker":
-                    return 3;
-            }
-
-            return -1;
+                "Administrator" => 1,
+                "Supervisor" => 2,
+                "Worker" => 3,
+                _ => -1
+            };
         }
 
         private async Task<int> GetNameId(string lastName, string firstName)
@@ -106,13 +96,13 @@ namespace StorageApp
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
                 await FileLogs.WriteLog(new ArgumentException($"Произошла ошибка полученных данных. Были введены пустые значения"));
                 return;
-            };
-            int nameId = await GetNameId(getElements[2], getElements[3]);
-            Worker worker = MakeWorker(getElements, nameId);
+            }
+            var nameId = await GetNameId(getElements[2], getElements[3]);
+            var worker = MakeWorker(getElements, nameId);
             await PushWorker(worker);
         }
 
-        private void CanellButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             var window = new MainWindow();
             window.Show();
@@ -122,7 +112,7 @@ namespace StorageApp
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
-            string[] items = context.Ranks.Select(i => i.Title).ToArray();
+            var items = context.Ranks.Select(i => i.Title).ToArray();
             foreach (var item in items)
             {
                 RankBox.Items.Add(item);
@@ -131,7 +121,7 @@ namespace StorageApp
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AddRole());
+            NavigationService?.Navigate(new AddRole());
         }
     }
 }

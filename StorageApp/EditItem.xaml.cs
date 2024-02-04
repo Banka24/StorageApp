@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using System.Data.Entity;
 using System.Threading.Tasks;
 
@@ -12,7 +10,7 @@ namespace StorageApp
     /// <summary>
     /// Логика взаимодействия для EditItem.xaml
     /// </summary>
-    public partial class EditItem : Page
+    public partial class EditItem
     {
         public EditItem()
         {
@@ -32,7 +30,7 @@ namespace StorageApp
         private async Task PushItem()
         {
             using var context = new MyDbContext();
-            var item = await EditInfo(context);
+            await EditInfo(context);
             try
             {
                 await context.SaveChangesAsync();
@@ -45,36 +43,33 @@ namespace StorageApp
             }
         }
 
-        private async Task<Item> EditInfo(MyDbContext context)
+        private async Task EditInfo(MyDbContext context)
         {
             var item = await GetItem(context);
 
             switch (Combo.Text)
             {
                 case "Row":
-                    if (!int.TryParse(Data.Text, out int row))
+                    if (!int.TryParse(Data.Text, out var row))
                     {
                         MessageBox.Show("Введите число");
                     }
                     item.Row = row;
                     break;
                 case "Shelf":
-                    if (!int.TryParse(Data.Text, out int shelf))
+                    if (!int.TryParse(Data.Text, out var shelf))
                     {
                         MessageBox.Show("Введите число");
                     }
                     item.Shelf = shelf;
                     break;
                 case "Category":
-                    int? categoryId = context.Categorys.Where(i => i.Name == ComboCategory.Text)?.FirstOrDefaultAsync().Id;
+                    var categoryId = context.Categories.Where(i => i.Name == ComboCategory.Text).FirstOrDefaultAsync().Id;
 
-                    if(categoryId is not null)
-                    {
-                        item.CategoryId = (int)categoryId;
-                    }
+                    item.CategoryId = categoryId;
                     break;
                 case "Status":
-                    int? statusId = context.Status?.Where(i => i.Name == ComboCategory.Text)?.FirstOrDefaultAsync().Id;
+                    var statusId = context.Status?.Where(i => i.Name == ComboCategory.Text).FirstOrDefaultAsync().Id;
 
                     if (statusId is not null)
                     {
@@ -82,12 +77,11 @@ namespace StorageApp
                     }
                     break;
             }
-            return item;
         }
 
         private async void Redact_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(Data.Text) && Data.IsEnabled is true || string.IsNullOrWhiteSpace(Combo.Text) || string.IsNullOrWhiteSpace(InventoryNumberTextBox.Text))
+            if (string.IsNullOrWhiteSpace(Data.Text) && Data.IsEnabled || string.IsNullOrWhiteSpace(Combo.Text) || string.IsNullOrWhiteSpace(InventoryNumberTextBox.Text))
             {
                 MessageBox.Show("введите все требуемые данные данные");
                 return;
@@ -98,14 +92,14 @@ namespace StorageApp
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Editor());
+            NavigationService?.Navigate(new Editor());
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
             string[] columns = ["Id", "InventoryNumber", "StatusId", "CategoryId"];
-            string[] categories = typeof(Item).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
+            var categories = typeof(Item).GetProperties().Where(x => !columns.Contains(x.Name)).Select(x => x.Name).ToArray();
             foreach (var category in categories)
             {
                 Combo.Items.Add(category);
@@ -114,7 +108,7 @@ namespace StorageApp
 
         private void Combo_LostMouseCapture(object sender, MouseEventArgs e)
         {
-            if(Combo.Text == "Status" || Combo.Text == "Category")
+            if(Combo.Text is "Status" or "Category")
             {
                 ComboCategory.IsEnabled = true;
                 Data.IsEnabled = false;
@@ -134,16 +128,16 @@ namespace StorageApp
 
         private void ComboCategory_GotMouseCapture(object sender, MouseEventArgs e)
         {
-            ComboCategory.Items?.Clear();
+            ComboCategory.Items.Clear();
             using var context = new MyDbContext();
             switch (Combo.Text)
             {
                 case "Status":
-                    string[] statuses = context.Status?.Select(i => i.Name).ToArray();
+                    var statuses = context.Status?.Select(i => i.Name).ToArray();
                     AddItems(statuses);
                     break;
                 case "Category":
-                    string[] categories = context.Categorys?.Select(i => i.Name).ToArray();
+                    var categories = context.Categories?.Select(i => i.Name).ToArray();
                     AddItems(categories);
                     break;
             }

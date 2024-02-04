@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:StorageApp"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddRole">
@@ -18,7 +17,7 @@
         <TextBlock Text="Добавление должности" HorizontalAlignment="Center" Style="{StaticResource TextBlockLarge}"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Height="40">
             <TextBlock Text="Название" Style="{StaticResource TextBlockSmall}" Margin="0,0,100,0" VerticalAlignment="Center"/>
-            <TextBox Width="250" Name="BoxName" Style="{StaticResource TextBox_Small}"/>
+            <TextBox Name="BoxName" Style="{StaticResource TextBoxSmall}"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Height="40">
             <TextBlock Text="Root-права" Style="{StaticResource TextBlockSmall}" Margin="0,0,100,0" VerticalAlignment="Center"/>
@@ -28,8 +27,8 @@
             </ComboBox>
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Height="40">
-            <Button Name="AddRoleBtn" Click="AddRoleBtn_Click" Content="Добавить" Margin="0,0,100,0" Width="150" Style="{StaticResource button_small}"/>
-            <Button Name="BackBtn" Click="Back_Click" Content="Назад" Width="150" Style="{StaticResource button_small}"/>
+            <Button Name="AddRoleBtn" Click="AddRoleBtn_Click" Content="Добавить" Margin="0,0,100,0" Width="150" Style="{StaticResource ButtonSmall}"/>
+            <Button Name="BackBtn" Click="Back_Click" Content="Назад" Width="150" Style="{StaticResource ButtonSmall}"/>
         </StackPanel>
     </Grid>
 </Page>

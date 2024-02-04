@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Threading.Tasks;
-using System.Windows.Navigation;
 using System.Data.Entity;
 
 namespace StorageApp
@@ -11,18 +9,18 @@ namespace StorageApp
     /// <summary>
     /// Логика взаимодействия для AddItem.xaml
     /// </summary>
-    public partial class AddItem : Page
+    public partial class AddItem
     {
         public AddItem()
         {
             InitializeComponent();
         }
 
-        private bool CheckDigitInString(in string value)
+        private static bool CheckDigitInString(in string value)
         {
-            bool flag = false;
-            char[] chars = value.ToCharArray();
-            foreach (char c in chars)
+            var flag = false;
+            var chars = value.ToCharArray();
+            foreach (var c in chars)
             {
                 flag = char.IsDigit(c);
             }
@@ -34,8 +32,8 @@ namespace StorageApp
             using var context = new MyDbContext();
             var item = new Item
             {
-                InventoryNumber = $"{NumberItem.Text}{NumberParty.Text}{DateTime.Now.ToString("ddMMyyyy")}",
-                CategoryId = await context.Categorys?.Where(i => i.Name == Combo.Text)?.Select(i => i.Id).FirstOrDefaultAsync(),
+                InventoryNumber = $"{NumberItem.Text}{NumberParty.Text}{DateTime.Now:ddMMyyyy}",
+                CategoryId = await context.Categories?.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefaultAsync()!,
                 StatusId = 1,
                 Row = Convert.ToInt32(RowTextBox.Text),
                 Shelf = Convert.ToInt32(ShelfTextBox.Text),
@@ -82,13 +80,13 @@ namespace StorageApp
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Editor());
+            NavigationService?.Navigate(new Editor());
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
-            string[] items = context.Categorys.Select(i => i.Name).ToArray();
+            var items = context.Categories.Select(i => i.Name).ToArray();
             foreach (var item in items)
             {
                 Combo.Items.Add(item);

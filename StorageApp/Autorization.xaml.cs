@@ -4,46 +4,43 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json.Linq;
-using System.Threading;
 
 namespace StorageApp
 {
     /// <summary>
-    /// Логика взаимодействия для Autorization.xaml
+    /// Логика взаимодействия для Authorization.xaml
     /// </summary>
-    public partial class Autorization : Window
+    public partial class Authorization
     {
       
-        public Autorization()
+        public Authorization()
         {
             InitializeComponent();
         }
 
-        private Worker CheckZeroUser(string login, string password)
+        private static Worker CheckZeroUser(string login, string password)
         {
             var jsonFile = File.ReadAllText(@"D:\\learn\\C#\\MyPracticWork\\StorageApp\\StorageApp\\zeroUser.json");
             var jsonObject = JObject.Parse(jsonFile);
 
-            if (jsonObject.TryGetValue("Login", out var value) && value.ToString() == login && jsonObject.TryGetValue("Password", out var value1) && value1.ToString() == password)
-            {
-                var worker = new Worker
-                {
-                    Login = login,
-                    Password = password,
-                };
-                return worker;
-            }
+            if (!jsonObject.TryGetValue("Login", out var value) || value.ToString() != login || !jsonObject.TryGetValue("Password", out var value1) || value1.ToString() != password) return null;
 
-            return null;
+            var worker = new Worker
+            {
+                Login = login,
+                Password = password,
+            };
+            return worker;
+
         }
 
-        private async Task<Worker> CheckUser(string login, string password)
+        private async Task CheckUser(string login, string password)
         {
             var context = new MyDbContext();
             Worker user = null;
             try
             {
-                user = await context.Workers.Include(i => i.Name)?.SingleOrDefaultAsync(i => i.Login == login && i.Password == password);
+                user = await context.Workers.Include(i => i.Name).SingleOrDefaultAsync(i => i.Login == login && i.Password == password);
             }
             catch(Exception ex) 
             {
@@ -72,7 +69,6 @@ namespace StorageApp
                     MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
                 }
             }
-            return user;
         }
 
         private void ChangeWindow()
@@ -84,8 +80,8 @@ namespace StorageApp
 
         private async void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            string login = LoginTextBox.Text;
-            string password = MyPassword.Password;
+            var login = LoginTextBox.Text;
+            var password = MyPassword.Password;
             await CheckUser(login, password);
         }
         private void ExitButton_Click(object sender, RoutedEventArgs e)

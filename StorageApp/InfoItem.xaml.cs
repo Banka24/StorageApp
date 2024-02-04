@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Data.Entity;
 
 namespace StorageApp
@@ -8,17 +7,17 @@ namespace StorageApp
     /// <summary>
     /// Логика взаимодействия для InfoItem.xaml
     /// </summary>
-    public partial class InfoItem : Page
+    public partial class InfoItem
     {
         public InfoItem()
         {
             InitializeComponent();
         }
 
-        private async Task<Item> GetInfo(string number)
+        private static async Task<Item> GetInfo(string number)
         {
             var context = new MyDbContext();
-            var item = await context.Items.Include(i => i.Status).Include(i => i.Category)?.FirstOrDefaultAsync(i => i.InventoryNumber == number);
+            var item = await context.Items.Include(i => i.Status).Include(i => i.Category).FirstOrDefaultAsync(i => i.InventoryNumber == number);
             return item;
         }
 

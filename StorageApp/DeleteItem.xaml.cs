@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
@@ -11,7 +9,7 @@ namespace StorageApp
     /// <summary>
     /// Логика взаимодействия для DeleteItem.xaml
     /// </summary>
-    public partial class DeleteItem : Page
+    public partial class DeleteItem
     {
         public DeleteItem()
         {
@@ -20,14 +18,14 @@ namespace StorageApp
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Editor());
+            NavigationService?.Navigate(new Editor());
         }
 
         private async Task RemoveItem()
         {
             using var context = new MyDbContext();
-            var item = await context.Items?.Where(i => i.InventoryNumber == Deletebox.Text)?.FirstAsync();
-            context.Items.Remove(item);
+            var item = await context.Items?.Where(i => i.InventoryNumber == Delete.Text).FirstAsync()!;
+            context.Items?.Remove(item);
 
             try
             {
@@ -43,7 +41,7 @@ namespace StorageApp
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrWhiteSpace(Deletebox.Text))
+            if(string.IsNullOrWhiteSpace(Delete.Text))
             {
                 MessageBox.Show("введите все требуемые данные данные");
             }

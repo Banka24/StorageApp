@@ -10,12 +10,11 @@ namespace StorageApp
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private enum Role
         {
             Administrator = 1,
-            Supervision,
             Worker,
         }
         public MainWindow()
@@ -40,23 +39,23 @@ namespace StorageApp
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            var window = new Autorization();
+            var window = new Authorization();
             window.Show();
             Close();
         }
 
-        private async Task<Worker> GetWorker(MyDbContext context)
+        private static async Task<Worker> GetWorker(MyDbContext context)
         {
-            return await context.Workers?.Where(i => i.Name.FirstName == SharedContext.Name)?.SingleOrDefaultAsync();
+            return await context.Workers?.Where(i => i.Name.FirstName == SharedContext.Name).SingleOrDefaultAsync()!;
         }
 
-        private async Task<Worker> StartWorkShift(MyDbContext context)
+        private static async Task StartWorkShift(MyDbContext context)
         {
             var worker = await GetWorker(context);
 
             if (worker == null)
             {
-                return null;
+                return;
             }
 
             if (worker.OnWork == "YES")
@@ -69,13 +68,12 @@ namespace StorageApp
                 MessageBox.Show("Вы начали смену");
                 worker.OnWork = "YES";
             }
-            return worker;
         }
 
         private async void BtnGoWork_Click(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
-            var worker = await StartWorkShift(context);
+            await StartWorkShift(context);
             try
             {
                 await context.SaveChangesAsync();
@@ -88,7 +86,7 @@ namespace StorageApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            textName.Text = $"Добрый день, {SharedContext.Name}";
+            TextName.Text = $"Добрый день, {SharedContext.Name}";
             switch (SharedContext.Role)
             {
                 case (int)Role.Administrator:

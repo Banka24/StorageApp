@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 using System.Data.Entity;
 
 namespace StorageApp
@@ -8,7 +6,7 @@ namespace StorageApp
     /// <summary>
     /// Логика взаимодействия для ReportWorker.xaml
     /// </summary>
-    public partial class ReportWorker : Page
+    public partial class ReportWorker
     {
         public ReportWorker()
         {
@@ -17,19 +15,19 @@ namespace StorageApp
 
         private void BackClicked(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Reports());
+            NavigationService?.Navigate(new Reports());
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
-            var workers = await context.Workers?.Include(i => i.Name)?.Include(i => i.Rank).ToListAsync();
+            var workers = await context.Workers?.Include(i => i.Name).Include(i => i.Rank).ToListAsync()!;
             ListWorkers.ItemsSource = workers;
         }
 
         private void UpdatePage_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Refresh();
+            NavigationService?.Refresh();
         }
     }
 }

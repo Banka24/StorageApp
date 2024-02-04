@@ -1,11 +1,10 @@
-﻿<Window x:Class="StorageApp.Autorization"
+﻿<Window x:Class="StorageApp.Authorization"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:StorageApp"
         mc:Ignorable="d"
-        Title="Autorization" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="ToolWindow">
+        Title="Authorization" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="ToolWindow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -16,16 +15,16 @@
         <TextBlock Text="Введите данные" Style="{StaticResource TextBlockLarge}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
             <TextBlock Text="Введите логин: " Style="{StaticResource TextBlockSmall}" Margin="25, 0" VerticalAlignment="Center"/>
-            <TextBox Name="LoginTextBox" Style="{StaticResource TextBox_Small}"/>
+            <TextBox Name="LoginTextBox" Style="{StaticResource TextBoxSmall}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
             <TextBlock Text="Введите пароль: " Style="{StaticResource TextBlockSmall}" Margin="25, 0" VerticalAlignment="Center"/>
-            <PasswordBox Name="MyPassword" Style="{StaticResource PasswordBox_Small}"/>
+            <PasswordBox Name="MyPassword" Style="{StaticResource PasswordBoxSmall}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3">
-            <Button Name="EnterButton" Content="Войти" Style="{StaticResource button_small}" Click="EnterButton_Click" Margin="25, 0"/>
-            <Button Name="ExitButton" Content="Выйти" Style="{StaticResource button_small}" Click="ExitButton_Click" Margin="25, 0"/>
-            <Button Name="SettingServerBtn" Grid.Row="4" Content="Настройка сервера" Width="150" Style="{StaticResource button_small}"  Margin="25, 0" Click="SettingServerBtn_Click"/>
+            <Button Name="EnterButton" Content="Войти" Style="{StaticResource ButtonSmall}" Click="EnterButton_Click" Margin="25, 0"/>
+            <Button Name="ExitButton" Content="Выйти" Style="{StaticResource ButtonSmall}" Click="ExitButton_Click" Margin="25, 0"/>
+            <Button Name="SettingServerBtn" Content="Настройка сервера" Width="150" Style="{StaticResource ButtonSmall}"  Margin="25, 0" Click="SettingServerBtn_Click"/>
         </StackPanel>
     </Grid>
 </Window>

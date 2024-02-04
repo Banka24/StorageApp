@@ -59,5 +59,17 @@ namespace StorageApp.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0} в объекте {1} произошла ошибка: {2}.
+        ///Трассировка стека:{3}.
+        ///
+        ///.
+        /// </summary>
+        internal static string FileLogs_WriteLog_ {
+            get {
+                return ResourceManager.GetString("FileLogs_WriteLog_", resourceCulture);
+            }
+        }
     }
 }

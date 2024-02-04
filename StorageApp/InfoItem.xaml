@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:StorageApp"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="InfoItem" Background="White">
@@ -20,25 +19,25 @@
         <TextBlock Text="Информация о товаре" Style="{StaticResource TextBlockLarge}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Введите инвентарный номер" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center"/>
-            <TextBox Name="InventoryBox" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBox_Small}" Margin="25, 0"/>
+            <TextBox Name="InventoryBox" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBoxSmall}" Margin="25, 0"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Категория" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center" Margin="55, 0"/>
-            <TextBox Name="CategoryBox" IsReadOnly="True" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBox_Small}" Margin="25, 0"/>
+            <TextBox Name="CategoryBox" IsReadOnly="True" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBoxSmall}" Margin="25, 0"/>
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Статус" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center" Margin="65, 0"/>
-            <TextBox Name="StatusBox" IsReadOnly="True" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBox_Small}" Margin="25, 0"/>
+            <TextBox Name="StatusBox" IsReadOnly="True" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBoxSmall}" Margin="25, 0"/>
         </StackPanel>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Ряд" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center" Margin="25, 0"/>
-            <TextBox Name="RowBox" TextAlignment="Center" IsReadOnly="True" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBox_Small}" Margin="25, 0"/>
-            <TextBlock Grid.Column="1" Text="Полка" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center" Margin="25, 0"/>
-            <TextBox Name="ShelfBox" TextAlignment="Center" IsReadOnly="True" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBox_Small}" Margin="25, 0"/>
+            <TextBox Name="RowBox" TextAlignment="Center" IsReadOnly="True" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBoxSmall}" Margin="25, 0"/>
+            <TextBlock Text="Полка" Style="{StaticResource TextBlockSmall}" VerticalAlignment="Center" Margin="25, 0"/>
+            <TextBox Name="ShelfBox" TextAlignment="Center" IsReadOnly="True" VerticalScrollBarVisibility="Hidden" Style="{StaticResource TextBoxSmall}" Margin="25, 0"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5">
-            <Button Name="OKButton" Click="OKButton_Click" Content="OK" Margin="25, 0" Style="{StaticResource button_small}"/>
-            <Button Name="BackButton" Click="BackButton_Click" Margin="25, 0" Content="Назад"  Style="{StaticResource button_small}"/>
+            <Button Name="OkButton" Click="OKButton_Click" Content="OK" Margin="25, 0" Style="{StaticResource ButtonSmall}"/>
+            <Button Name="BackButton" Click="BackButton_Click" Margin="25, 0" Content="Назад"  Style="{StaticResource ButtonSmall}"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -1,13 +1,11 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 
 namespace StorageApp
 {
     /// <summary>
     /// Логика взаимодействия для Editor.xaml
     /// </summary>
-    public partial class Editor : Page
+    public partial class Editor
     {
         public Editor()
         {
@@ -16,17 +14,17 @@ namespace StorageApp
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AddItem());
+            NavigationService?.Navigate(new AddItem());
         }
 
         private void BtnEd_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new EditItem());
+            NavigationService?.Navigate(new EditItem());
         }
 
         private void BtnDel_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new DeleteItem());
+            NavigationService?.Navigate(new DeleteItem());
         }
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)

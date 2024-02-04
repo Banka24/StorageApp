@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:StorageApp"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EditServer" Loaded="Page_Loaded">
@@ -20,9 +19,9 @@
         <TextBlock Name="ServerData" HorizontalAlignment="Center" Grid.Row="1" Style="{StaticResource TextBlockLarge}"/>
         <TextBlock Text="Введите адрес сервера" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Margin="42,0,0,0"/>
         <TextBlock Text="Введите имя БД" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Margin="42,0,0,0"/>
-        <TextBox x:Name="AddressBox" Grid.Row="2" HorizontalAlignment="Left" Style="{StaticResource TextBox_Small}" Margin="425,38,0,39"/>
-        <TextBox x:Name="DataBox" Grid.Row="3" HorizontalAlignment="Left" Style="{StaticResource TextBox_Small}" Margin="425,39,0,38"/>
-        <Button x:Name="AcButton" Content="Принять" Grid.Row="4" Margin="199,36,451,36" Click="AcButton_Click" Style="{StaticResource button_small}"/>
-        <Button x:Name="CanellBtn" Content="Отмена" Grid.Row="4" Margin="492,36,158,36" Click="CanellBtn_Click"  Style="{StaticResource button_small}"/>
+        <TextBox x:Name="AddressBox" Grid.Row="2" HorizontalAlignment="Left" Style="{StaticResource TextBoxSmall}" Margin="425,38,0,39"/>
+        <TextBox x:Name="DataBox" Grid.Row="3" HorizontalAlignment="Left" Style="{StaticResource TextBoxSmall}" Margin="425,39,0,38"/>
+        <Button x:Name="AcButton" Content="Принять" Grid.Row="4" Margin="199,36,451,36" Click="AcButton_Click" Style="{StaticResource ButtonSmall}"/>
+        <Button x:Name="CancelBtn" Content="Отмена" Grid.Row="4" Margin="492,36,158,36" Click="CancelBtn_Click"  Style="{StaticResource ButtonSmall}"/>
     </Grid>
 </Page>

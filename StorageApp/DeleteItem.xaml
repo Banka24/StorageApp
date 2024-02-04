@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:StorageApp"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DeleteItem">
@@ -17,11 +16,11 @@
         <TextBlock Text="Удаление продукта" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}"/>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" Width="600">
             <TextBlock Text="Инвентарный номер:" Style="{StaticResource TextBlockLarge}" Margin="20,60,10,35"/>
-            <TextBox x:Name="Deletebox" Style="{StaticResource TextBox_Small}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBox x:Name="Delete" Style="{StaticResource TextBoxSmall}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
-            <Button x:Name="DeleteButton"  Click="DeleteButton_Click" Content="Удалить" Style="{StaticResource button_small}" Margin="25, 0"/>
-            <Button Name="Exit" Content="Выход" Style="{StaticResource button_small}" Click="Exit_Click" Margin="25, 0"/>
+            <Button x:Name="DeleteButton"  Click="DeleteButton_Click" Content="Удалить" Style="{StaticResource ButtonSmall}" Margin="25, 0"/>
+            <Button Name="Exit" Content="Выход" Style="{StaticResource ButtonSmall}" Click="Exit_Click" Margin="25, 0"/>
         </StackPanel>
         
         

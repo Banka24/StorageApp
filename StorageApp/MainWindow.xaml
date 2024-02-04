@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:StorageApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
@@ -13,13 +12,13 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Name="textName" Text="" TextAlignment="Center" Style="{StaticResource TextBlockLarge}" VerticalAlignment="Center"/>
-        <Button Name="Logout" Content="Выйти" Style="{StaticResource button_small}" HorizontalAlignment="Right" Margin="25, 0" Click="Logout_Click"/>
-        <Button Name="BtnInfIt" Content="информация о товаре" Grid.Row="1" Style="{StaticResource button_small}" Width="200" Visibility="Hidden" Click="BtnInfIt_Click"/>
-        <Button Name="BtnInfAdmin" Content="Редактор товаров" Grid.Row="1" Style="{StaticResource button_small}" Width="200" Visibility="Hidden" Click="BtnInfIt_Click_1"/>
-        <Button Name="BtnGoWork" Grid.Row="3" Content="начать(закончить) смену" Style="{StaticResource button_small}" Visibility="Hidden" Width="200" Click="BtnGoWork_Click"/>
-        <Button Name="BtnGoAdmin" Content="Отчеты" Grid.Row="2" Style="{StaticResource button_small}" Visibility="Hidden" Width="200" Click="BtnGoAdmin_Click"/>
-        <Button Name="RegistrationBtn" Grid.Row="3" Content="Регистрация рабочего" Width="200" Style="{StaticResource button_small}" Click="RegistrationBtn_Click" Visibility="Hidden"/>
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.RowSpan="4"/>
+        <TextBlock Name="TextName" Text="" TextAlignment="Center" Style="{StaticResource TextBlockLarge}" VerticalAlignment="Center"/>
+        <Button Grid.Row="0" Name="Logout" Content="Выйти" Style="{StaticResource ButtonSmall}" HorizontalAlignment="Right" Margin="25, 0" Click="Logout_Click"/>
+        <Button Name="BtnInfIt" Content="информация о товаре" Grid.Row="1" Style="{StaticResource ButtonSmall}" Width="200" Visibility="Hidden" Click="BtnInfIt_Click"/>
+        <Button Name="BtnInfAdmin" Content="Редактор товаров" Grid.Row="1" Style="{StaticResource ButtonSmall}" Width="200" Visibility="Hidden" Click="BtnInfIt_Click_1"/>
+        <Button Name="BtnGoWork" Grid.Row="3" Content="начать(закончить) смену" Style="{StaticResource ButtonSmall}" Visibility="Hidden" Width="200" Click="BtnGoWork_Click"/>
+        <Button Name="BtnGoAdmin" Content="Отчеты" Grid.Row="2" Style="{StaticResource ButtonSmall}" Visibility="Hidden" Width="200" Click="BtnGoAdmin_Click"/>
+        <Button Name="RegistrationBtn" Grid.Row="3" Content="Регистрация рабочего" Width="200" Style="{StaticResource ButtonSmall}" Click="RegistrationBtn_Click" Visibility="Hidden"/>
+        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="0" Grid.RowSpan="4"/>
     </Grid>
 </Window>

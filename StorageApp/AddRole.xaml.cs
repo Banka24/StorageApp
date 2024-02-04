@@ -1,32 +1,26 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 
 namespace StorageApp
 {
     /// <summary>
     /// Логика взаимодействия для AddRole.xaml
     /// </summary>
-    public partial class AddRole : Page
+    public partial class AddRole
     {
         public AddRole()
         {
             InitializeComponent();
         }
 
-        private string[] CheckData(in string[] strings)
+        private static string[] CheckData(in string[] strings)
         {
-            foreach (string s in strings)
-            {
-                if (string.IsNullOrWhiteSpace(s))
-                {
-                    MessageBox.Show("Введено некорректное значение");
-                    return null;
-                }
-            }
-            return strings;
+            if (!strings.Any(string.IsNullOrWhiteSpace)) return strings;
+            MessageBox.Show("Введено некорректное значение");
+            return null;
+
         }
 
         private async Task<Rank> GetRank()
@@ -37,7 +31,7 @@ namespace StorageApp
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
                 await FileLogs.WriteLog(new ArgumentException($"Произошла ошибка полученных данных. Были введены пустые значения"));
                 return null;
-            };
+            }
 
             var rank = new Rank
             {
@@ -63,7 +57,7 @@ namespace StorageApp
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Registration());
+            NavigationService?.Navigate(new Registration());
         }
     }
 }

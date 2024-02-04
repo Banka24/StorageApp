@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:StorageApp" xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="810"
       Title="ReportWorker" Loaded="Page_Loaded">
@@ -12,8 +11,10 @@
         <ListView Name="ListWorkers" Background="Lavender"
           Width="810"
           Height="350">
+            <d:ListView.DataContext>
+                <d:DesignInstance />
+            </d:ListView.DataContext>
             <ListView.Resources>
-                <col:ArrayList x:Key="BD"/>
             </ListView.Resources>
             <ListView.View>
                 <GridView>
@@ -26,9 +27,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="UpdatePage" Style="{StaticResource button_small}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" Click="UpdatePage_Click">
+        <Button Name="UpdatePage" Style="{StaticResource ButtonSmall}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" Click="UpdatePage_Click">
             <Image Source="Images\Update.png"/>
         </Button>
-        <Button Style="{StaticResource button_small}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" Content="Назад" Click="BackClicked"/>
+        <Button Style="{StaticResource ButtonSmall}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" Content="Назад" Click="BackClicked"/>
     </Grid>
 </Page>

@@ -1,8 +1,11 @@
-﻿namespace StorageApp
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StorageApp
 {
-    class Item
+    internal class Item
     {
         public int Id { get; set; }
+        [MaxLength (16)]
         public string InventoryNumber { get; set; }
         public int CategoryId { get; set; }
         public byte StatusId { get; set; }

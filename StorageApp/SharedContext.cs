@@ -1,7 +1,10 @@
-﻿namespace StorageApp
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StorageApp
 {
-    abstract class SharedContext
+    internal abstract class SharedContext
     {
+        [MaxLength(25)]
         public static string Name { get; set; }
         public static int Role { get; set; }
     }
