@@ -43,7 +43,7 @@ namespace StorageApp
 
         }
 
-        private async Task CheckUser(string login, string password)
+        private static async Task CheckUser(string login, string password)
         {
             var context = new MyDbContext();
             Worker user = null;
