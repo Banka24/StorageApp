@@ -15,7 +15,8 @@
                 Margin="0,0,10,10"
                 Content="Назад"
                 Click="BackClicked"/>
-        <lvc:PieChart Name="Diagramma" LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}">
+        <lvc:PieChart Name="Diagram" LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}"
+                      d:DataContext="{d:DesignData }">
             <lvc:PieChart.Series>
                 <lvc:PieSeries Name="Series2" Title="Поступило" Values="0" DataLabels="True" 
                                LabelPoint="{Binding PointLabel}"/>

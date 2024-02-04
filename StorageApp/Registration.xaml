@@ -4,17 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="800"
       Title="Registration" Loaded="Page_Loaded">
 
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="85"/>
+            <RowDefinition Height="85"/>
+            <RowDefinition Height="85"/>
+            <RowDefinition Height="85"/>
+            <RowDefinition Height="85"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Text="Регистрация пользователя" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Margin="19,0,0,0"/>
@@ -22,14 +22,16 @@
         <TextBlock Text="Пароль" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Margin="104,0,0,0"/>
         <TextBlock Text="Фамилия" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Margin="88,0,0,0"/>
         <TextBlock Text="Имя" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Margin="130,0,0,0"/>
-        <TextBlock Text="Должность" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Margin="62,0,0,0"/>
         <TextBox x:Name="LogBox" Grid.Row="1" HorizontalAlignment="Left" Style="{StaticResource TextBoxSmall}" Margin="442,15,0,15"/>
         <PasswordBox x:Name="PassBox" Grid.Row="2" HorizontalAlignment="Left" Style="{StaticResource PasswordBoxSmall}" Margin="442,15,0,15"/>
         <TextBox x:Name="SurBox" Grid.Row="3" HorizontalAlignment="Left" Style="{StaticResource TextBoxSmall}" Margin="442,15,0,15"/>
         <TextBox x:Name="NameBox" Grid.Row="4" HorizontalAlignment="Left" Style="{StaticResource TextBoxSmall}" Margin="442,15,0,15"/>
-        <ComboBox Name="RankBox" Grid.Row="5" Margin="340, 0, 200, 0" Width="250" Height="40" />
+        <StackPanel Orientation="Horizontal" Grid.Row="5">
+            <TextBlock Text="Должность" VerticalAlignment="Center" Style="{StaticResource TextBlockLarge}" Margin="65, 0, 100, 0"/>
+            <ComboBox Name="RankBox" Margin="70, 0, 10, 0"  Width="250" Height="40"/>
+            <Button x:Name="BtnAdd" Content="Добавить нового должность"  Margin="10, 20" Click="BtnAdd_Click"/>
+        </StackPanel>
         <Button x:Name="AcButton" Content="Принять" Grid.Row="6" Height="40" Width="150" HorizontalAlignment="Left" Style="{StaticResource ButtonSmall}" Margin="192,12,0,12" Click="AcButton_Click"/>
-        <Button x:Name="CanellButton" Content="Отмена" Grid.Row="6" Height="40" Width="150" HorizontalAlignment="Left" Style="{StaticResource ButtonSmall}" Margin="452,12,0,12" Click="CancelButton_Click"/>
-        <Button x:Name="BtnAdd" Content="Добавить нового пользователя" HorizontalAlignment="Right" Grid.Row="5" Margin="2" Click="BtnAdd_Click"/>
+        <Button x:Name="CancelButton" Content="Отмена" Grid.Row="6" Height="40" Width="150" HorizontalAlignment="Left" Style="{StaticResource ButtonSmall}" Margin="452,12,0,12" Click="CancelButton_Click"/>
     </Grid>
 </Page>

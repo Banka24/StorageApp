@@ -23,7 +23,7 @@ namespace StorageApp
 
         }
 
-        private Worker MakeWorker(in string[] data, in int nameId)
+        private static Worker MakeWorker(in string[] data, in int nameId)
         {
             var worker = new Worker()
             {
@@ -72,7 +72,7 @@ namespace StorageApp
             return nameWorker.Id;
         }
 
-        private async Task PushWorker(Worker worker)
+        private static async Task PushWorker(Worker worker)
         {
             using var context = new MyDbContext();
             context.Workers.Add(worker);
@@ -94,7 +94,7 @@ namespace StorageApp
             if (CheckData(getElements) is null)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
-                await FileLogs.WriteLog(new ArgumentException($"Произошла ошибка полученных данных. Были введены пустые значения"));
+                await FileLogs.WriteLog(new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
                 return;
             }
             var nameId = await GetNameId(getElements[2], getElements[3]);

@@ -20,15 +20,15 @@ namespace StorageApp
 
         private static string GetFullPath()
         {
-            var jsonFilePath = "zeroUser.json";
-            var projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            const string jsonFilePath = "zeroUser.json";
+            var projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.FullName ?? string.Empty;
             var fullPath = Path.Combine(projectDirectory, jsonFilePath);
             return fullPath;
         }
 
         private static Worker CheckZeroUser(string login, string password)
         {
-            string fullFilePath = GetFullPath();
+            var fullFilePath = GetFullPath();
             var jsonFile = File.ReadAllText(fullFilePath);
             var jsonObject = JObject.Parse(jsonFile);
 

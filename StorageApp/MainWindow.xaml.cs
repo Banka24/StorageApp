@@ -15,6 +15,7 @@ namespace StorageApp
         private enum Role
         {
             Administrator = 1,
+            Supervisor,
             Worker,
         }
         public MainWindow()
@@ -97,6 +98,7 @@ namespace StorageApp
                     }
                     break;
 
+                case (int)Role.Supervisor:
                 case (int)Role.Worker:
                     Button[] workerButtons = [BtnInfIt, BtnGoWork];
                     foreach (var button in workerButtons)

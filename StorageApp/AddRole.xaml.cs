@@ -20,7 +20,6 @@ namespace StorageApp
             if (!strings.Any(string.IsNullOrWhiteSpace)) return strings;
             MessageBox.Show("Введено некорректное значение");
             return null;
-
         }
 
         private async Task<Rank> GetRank()
@@ -29,7 +28,7 @@ namespace StorageApp
             if (CheckData(getElements) is null)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
-                await FileLogs.WriteLog(new ArgumentException($"Произошла ошибка полученных данных. Были введены пустые значения"));
+                await FileLogs.WriteLog(new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
                 return null;
             }
 
@@ -46,13 +45,24 @@ namespace StorageApp
         {
             using var context = new MyDbContext();
             var rank = await GetRank();
-            context.Ranks.Add(rank);
-            await context.SaveChangesAsync();
+            if (rank is not null)
+            {
+                context.Ranks.Add(rank);
+                try
+                {
+                    await context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    await FileLogs.WriteLog(ex);
+                }
+                MessageBox.Show("Должность была добавлена");
+            }
         }
 
-        private void AddRoleBtn_Click(object sender, RoutedEventArgs e)
+        private async void AddRoleBtn_Click(object sender, RoutedEventArgs e)
         {
-            Task.Run(PushRank);
+            await PushRank();
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
