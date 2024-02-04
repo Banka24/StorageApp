@@ -18,9 +18,18 @@ namespace StorageApp
             InitializeComponent();
         }
 
+        private static string GetFullPath()
+        {
+            var jsonFilePath = "zeroUser.json";
+            var projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            var fullPath = Path.Combine(projectDirectory, jsonFilePath);
+            return fullPath;
+        }
+
         private static Worker CheckZeroUser(string login, string password)
         {
-            var jsonFile = File.ReadAllText(@"D:\\learn\\C#\\MyPracticWork\\StorageApp\\StorageApp\\zeroUser.json");
+            string fullFilePath = GetFullPath();
+            var jsonFile = File.ReadAllText(fullFilePath);
             var jsonObject = JObject.Parse(jsonFile);
 
             if (!jsonObject.TryGetValue("Login", out var value) || value.ToString() != login || !jsonObject.TryGetValue("Password", out var value1) || value1.ToString() != password) return null;
