@@ -61,7 +61,6 @@ namespace StorageApp
             {
                 SharedContext.Name = user.Name.FirstName;
                 SharedContext.Role = user.RankId;
-                ChangeWindow();
             }
             else
             {
@@ -71,7 +70,6 @@ namespace StorageApp
                 {
                     SharedContext.Role = 1;
                     SharedContext.Name = "Админ";
-                    ChangeWindow();
                 }
                 else
                 {
@@ -91,7 +89,11 @@ namespace StorageApp
         {
             var login = LoginTextBox.Text;
             var password = MyPassword.Password;
-            await CheckUser(login, password);
+            await Task.Run(async () => await CheckUser(login, password));
+            if (SharedContext.Role == 0 || SharedContext.Name == "Админ")
+            {
+                ChangeWindow();
+            }
         }
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
