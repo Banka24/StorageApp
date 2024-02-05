@@ -64,12 +64,14 @@ namespace StorageApp
                     item.Shelf = shelf;
                     break;
                 case "Category":
-                    var categoryId = context.Categories.Where(i => i.Name == ComboCategory.Text).FirstOrDefaultAsync().Id;
-
-                    item.CategoryId = categoryId;
+                    var categoryId = context.Categories.FirstOrDefault(i => i.Name == ComboCategory.Text)?.Id;
+                    if (categoryId is not null)
+                    {
+                        item.CategoryId = (int)categoryId!;
+                    }
                     break;
                 case "Status":
-                    var statusId = context.Status?.Where(i => i.Name == ComboCategory.Text).FirstOrDefaultAsync().Id;
+                    var statusId = context.Status?.FirstOrDefault(i => i.Name == ComboCategory.Text)?.Id;
 
                     if (statusId is not null)
                     {

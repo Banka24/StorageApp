@@ -34,7 +34,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5" Width="400">
             <Button x:Name="Redact" Click="Redact_Click" Content="Редактировать" Style="{StaticResource ButtonSmall}" Margin="25" Width="150" Height="50"/>
-            <Button Name="Exit" Content="Выйти" Style="{StaticResource ButtonSmall}" Click="Exit_Click" Margin="25" Width="150" Height="50"/>
+            <Button Name="Exit" Content="Отмена" Style="{StaticResource ButtonSmall}" Click="Exit_Click" Margin="25" Width="150" Height="50"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -90,7 +90,7 @@ namespace StorageApp
             var login = LoginTextBox.Text;
             var password = MyPassword.Password;
             await Task.Run(async () => await CheckUser(login, password));
-            if (SharedContext.Role == 0 || SharedContext.Name == "Админ")
+            if (SharedContext.Role != 0)
             {
                 ChangeWindow();
             }

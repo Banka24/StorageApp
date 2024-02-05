@@ -10,7 +10,7 @@ namespace StorageApp
         private const string Path = "StorageAppLogs.txt";
         public static async Task<Task> WriteLog(Exception ex)
         { 
-            await Task.Run(() => { File.AppendAllText(Path, string.Format(Resources.FileLogs_WriteLog_, DateTime.Now, ex.Source, ex.Message, ex.StackTrace)); });
+            await Task.Run(() => { File.AppendAllText(Path, string.Format(Resources.FileLogs_WriteLog_, DateTime.Now, ex.Source, ex.Message, ex.StackTrace, ex.InnerException)); });
             return Task.CompletedTask;
         }
     }

@@ -20,7 +20,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
             <Button x:Name="DeleteButton"  Click="DeleteButton_Click" Content="Удалить" Style="{StaticResource ButtonSmall}" Margin="25, 0"/>
-            <Button Name="Exit" Content="Выход" Style="{StaticResource ButtonSmall}" Click="Exit_Click" Margin="25, 0"/>
+            <Button Name="Exit" Content="Отмена" Style="{StaticResource ButtonSmall}" Click="Exit_Click" Margin="25, 0"/>
         </StackPanel>
         
         
