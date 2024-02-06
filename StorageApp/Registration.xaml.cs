@@ -14,15 +14,12 @@ namespace StorageApp
         {
             InitializeComponent();
         }
-
         private static string[] CheckData(in string[] strings)
         {
             if (!strings.Any(string.IsNullOrWhiteSpace)) return strings;
             MessageBox.Show("Введено некорректное значение");
             return null;
-
         }
-
         private static Worker MakeWorker(in string[] data, in int nameId)
         {
             var worker = new Worker()
@@ -36,7 +33,6 @@ namespace StorageApp
 
             return worker;
         }
-
         private static int GetRankId(string rank)
         {
             return rank switch
@@ -47,8 +43,7 @@ namespace StorageApp
                 _ => -1
             };
         }
-
-        private async Task<int> GetNameId(string lastName, string firstName)
+        private static async Task<int> GetNameId(string lastName, string firstName)
         {
             using var context = new MyDbContext();
             var nameWorker = new Name
@@ -71,11 +66,12 @@ namespace StorageApp
 
             return nameWorker.Id;
         }
-
         private static async Task PushWorker(Worker worker)
         {
             using var context = new MyDbContext();
+
             context.Workers.Add(worker);
+
             try
             {
                 await context.SaveChangesAsync();
@@ -87,28 +83,27 @@ namespace StorageApp
                 await FileLogs.WriteLog(ex);
             }
         }
-
         private async void AcButton_Click(object sender, RoutedEventArgs e)
         {
             string[] getElements = [LogBox.Text, PassBox.Password, SurBox.Text, NameBox.Text, RankBox.Text];
+
             if (CheckData(getElements) is null)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
                 await FileLogs.WriteLog(new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
                 return;
             }
+
             var nameId = await GetNameId(getElements[2], getElements[3]);
             var worker = MakeWorker(getElements, nameId);
             await PushWorker(worker);
         }
-
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             var window = new MainWindow();
             window.Show();
             Window.GetWindow(this)?.Close();
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             using var context = new MyDbContext();
@@ -118,7 +113,6 @@ namespace StorageApp
                 RankBox.Items.Add(item);
             }
         }
-
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new AddRole());

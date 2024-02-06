@@ -9,37 +9,43 @@ namespace StorageApp
     /// <summary>
     /// Логика взаимодействия для AddItem.xaml
     /// </summary>
+
     public partial class AddItem
     {
+        private readonly MyDbContext _context;
         public AddItem()
         {
             InitializeComponent();
+            _context = new MyDbContext();
         }
 
-        private static bool CheckDigitInString(in string value)
+        private async Task<Item> MakeItem(int numberItem, int numberParty, int row, int shelf)  
         {
-            var flag = false;
-            var chars = value.ToCharArray();
-            foreach (var c in chars)
-            {
-                flag = char.IsDigit(c);
-            }
-            return flag;
-        }
-
-        private async Task<Item> MakeItem() 
-        {
-            using var context = new MyDbContext();
             var item = new Item
             {
-                InventoryNumber = $"{NumberItem.Text}{NumberParty.Text}{DateTime.Now:ddMMyyyy}",
-                CategoryId = await context.Categories?.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefaultAsync()!,
+                InventoryNumber = $"{numberItem}{numberParty}{DateTime.Now:ddMMyyyy}",
+                CategoryId = await _context.Categories?.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefaultAsync()!,
                 StatusId = 1,
-                Row = Convert.ToInt32(RowTextBox.Text),
-                Shelf = Convert.ToInt32(ShelfTextBox.Text),
+                Row = Convert.ToInt32(row),
+                Shelf = Convert.ToInt32(shelf)
             };
 
             return item;
+        }
+
+        private async Task PushItem(Item item)
+        {
+            _context.Items.Add(item);
+            try
+            {
+                await _context.SaveChangesAsync();
+                MessageBox.Show("Товар добавлен");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Произошла ошибка, проверьте логи.");
+                await FileLogs.WriteLog(ex);
+            }
         }
 
         private async void Add_Click(object sender, RoutedEventArgs e)
@@ -50,32 +56,21 @@ namespace StorageApp
                 return;
             }
 
-            if (!CheckDigitInString(NumberItem.Text) || !CheckDigitInString(NumberParty.Text))
+            if (!int.TryParse(NumberItem.Text, out var numberItem) || !int.TryParse(NumberParty.Text, out var numberParty))
             {
                 MessageBox.Show("Введите числа в номер партии и порядковый номер");
                 return;
             }
 
-            if(!CheckDigitInString(RowTextBox.Text) || !CheckDigitInString(ShelfTextBox.Text))
+            if (!int.TryParse(RowTextBox.Text, out var row) || !int.TryParse(ShelfTextBox.Text, out var shelf))
             {
                 MessageBox.Show("Введите ряд и полку");
                 return;
             }
 
-            var item = await MakeItem();
+            var item = await MakeItem(numberItem, numberParty, row, shelf);
 
-            using var context = new MyDbContext();
-            context.Items.Add(item);
-            try
-            {
-                await context.SaveChangesAsync();
-                MessageBox.Show("Товар добавлен");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Произошла ошибка, проверьте логи.");
-                await FileLogs.WriteLog(ex);
-            }
+            await PushItem(item);
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -83,14 +78,18 @@ namespace StorageApp
             NavigationService?.Navigate(new Editor());
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            using var context = new MyDbContext();
-            var items = context.Categories.Select(i => i.Name).ToArray();
+            var items = await _context.Categories.Select(i => i.Name).ToArrayAsync();
             foreach (var item in items)
             {
                 Combo.Items.Add(item);
             }
+        }
+        
+        private void AddItem_OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            _context.Dispose();
         }
     }
 }
