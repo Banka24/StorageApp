@@ -48,7 +48,7 @@ namespace StorageApp
             }
             catch (ConfigurationErrorsException ex)
             {
-                await FileLogs.WriteLog(ex);
+                await FileLogs.WriteLogAsync(ex);
                 MessageBox.Show("Произошла ошибка, проверьте логи");
             }
         }

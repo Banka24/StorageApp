@@ -61,7 +61,7 @@ namespace StorageApp
             catch (Exception ex)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
-                await FileLogs.WriteLog(ex);
+                await FileLogs.WriteLogAsync(ex);
             }
 
             return nameWorker.Id;
@@ -80,7 +80,7 @@ namespace StorageApp
             catch (Exception ex)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
-                await FileLogs.WriteLog(ex);
+                await FileLogs.WriteLogAsync(ex);
             }
         }
         private async void AcButton_Click(object sender, RoutedEventArgs e)
@@ -90,7 +90,7 @@ namespace StorageApp
             if (CheckData(getElements) is null)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
-                await FileLogs.WriteLog(new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
+                await FileLogs.WriteLogAsync(new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
                 return;
             }
 

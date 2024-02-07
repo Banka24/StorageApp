@@ -19,21 +19,33 @@ namespace StorageApp
             _context = new MyDbContext();
         }
 
-        private async Task<Item> MakeItem(int numberItem, int numberParty, int row, int shelf)  
+        private async Task<int> GetCategoryIdAsync()
         {
+            return await _context.Categories.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefaultAsync();
+        }
+
+        private async Task<Item> MakeItemAsync(int numberItem, int numberParty, int row, int shelf)  
+        {
+            var categoryId = await GetCategoryIdAsync();
+            if ( categoryId <= 0)
+            {
+                MessageBox.Show("Произошла ошибка, проверьте логи");
+                await FileLogs.WriteLogAsync(new Exception(message:"Была найдена несуществующая категория"));
+                return null;
+            }
             var item = new Item
             {
                 InventoryNumber = $"{numberItem}{numberParty}{DateTime.Now:ddMMyyyy}",
-                CategoryId = await _context.Categories?.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefaultAsync()!,
+                CategoryId = categoryId,
                 StatusId = 1,
-                Row = Convert.ToInt32(row),
-                Shelf = Convert.ToInt32(shelf)
+                Row = row,
+                Shelf = shelf
             };
 
             return item;
         }
 
-        private async Task PushItem(Item item)
+        private async Task PushItemAsync(Item item)
         {
             _context.Items.Add(item);
             try
@@ -44,7 +56,7 @@ namespace StorageApp
             catch (Exception ex)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
-                await FileLogs.WriteLog(ex);
+                await FileLogs.WriteLogAsync(ex);
             }
         }
 
@@ -68,9 +80,16 @@ namespace StorageApp
                 return;
             }
 
-            var item = await MakeItem(numberItem, numberParty, row, shelf);
+            var item = await MakeItemAsync(numberItem, numberParty, row, shelf);
 
-            await PushItem(item);
+            if (item is null)
+            {
+                MessageBox.Show("Произошла ошибка, проверьте логи");
+                await FileLogs.WriteLogAsync(new Exception(message: "Был получен пустой объект"));
+                return;
+            }
+            await PushItemAsync(item);
+
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

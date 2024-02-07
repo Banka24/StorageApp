@@ -81,7 +81,7 @@ namespace StorageApp
             }
             catch (Exception ex)
             {
-                await FileLogs.WriteLog(ex);
+                await FileLogs.WriteLogAsync(ex);
             }
         }
 

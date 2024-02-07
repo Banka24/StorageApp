@@ -22,13 +22,13 @@ namespace StorageApp
             return null;
         }
 
-        private async Task<Rank> GetRank()
+        private async Task<Rank> GetRankAsync()
         {
             string[] getElements = [BoxName.Text, RootBox.Text];
             if (CheckData(getElements) is null)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи.");
-                await FileLogs.WriteLog(new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
+                await FileLogs.WriteLogAsync(new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
                 return null;
             }
 
@@ -41,10 +41,10 @@ namespace StorageApp
             return rank;
         }
 
-        private async Task PushRank()
+        private async Task PushRankAsync()
         {
             using var context = new MyDbContext();
-            var rank = await GetRank();
+            var rank = await GetRankAsync();
             if (rank is not null)
             {
                 context.Ranks.Add(rank);
@@ -54,7 +54,7 @@ namespace StorageApp
                 }
                 catch (Exception ex)
                 {
-                    await FileLogs.WriteLog(ex);
+                    await FileLogs.WriteLogAsync(ex);
                 }
                 MessageBox.Show("Должность была добавлена");
             }
@@ -62,7 +62,7 @@ namespace StorageApp
 
         private async void AddRoleBtn_Click(object sender, RoutedEventArgs e)
         {
-            await PushRank();
+            await PushRankAsync();
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
