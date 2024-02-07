@@ -77,7 +77,6 @@ namespace StorageApp
             }
 
             await _context.PushAsync(_context.Items, item, "Товар добавлен");
-
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
