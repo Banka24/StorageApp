@@ -12,6 +12,8 @@ namespace StorageApp
 
     public partial class AddItem
     {
+        private const string SuccessMessage = "Товар добавлен";
+        private const string FailMessage = "Произошла ошибка, проверьте логи.";
         public AddItem()
         {
             InitializeComponent();
@@ -20,15 +22,13 @@ namespace StorageApp
         private async Task<int> GetCategoryIdAsync()
         {
             int categoryId;
+
             using (var context = new MyDbContext())
             {
                 categoryId = await context.Categories.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefaultAsync();
             }
 
-            if (categoryId <= 0)
-            {
-                throw new CategoryNotFoundException($"{Combo.Text}");
-            }
+            if (categoryId <= 0) throw new CategoryNotFoundException($"{Combo.Text}");
 
             return categoryId;
         }
@@ -90,14 +90,9 @@ namespace StorageApp
 
             using var context = new MyDbContext();
 
-            if (await context.PushAsync(context.Items, item))
-            {
-                MessageBox.Show("Товар добавлен");
-            }
-            else
-            {
-                MessageBox.Show("Произошла ошибка, проверьте логи.");
-            }
+            var message = await context.PushAsync(context.Items, item) ? SuccessMessage : FailMessage;
+
+            MessageBox.Show(message);
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

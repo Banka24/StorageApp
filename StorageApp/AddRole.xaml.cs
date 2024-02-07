@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace StorageApp
@@ -8,52 +11,61 @@ namespace StorageApp
     /// </summary>
     public partial class AddRole
     {
-        private readonly MyDbContext _context;
+        private const string SuccessMessage = "Должность была добавлен";
+        private const string FailMessage = "Возникла ошибка добавления должности";
+        private const string ErrorRankMessage = "Такая должность уже существует";
+
         public AddRole()
         {
             InitializeComponent();
-            _context = new MyDbContext();
         }
 
         private static string[] CheckData(in string[] strings)
         {
-            if (!strings.Any(string.IsNullOrWhiteSpace)) return strings;
-
-            MessageBox.Show("Введено некорректное значение");
-
-            return null;
+            return strings.Any(string.IsNullOrWhiteSpace) ? null : strings;
         }
 
-        private Rank GetRank()
+        private static async Task<bool> CheckRankInBaseAsync(string rankTitle)
         {
-            var getElements =  CheckData([BoxName.Text, RootBox.Text]);
+            using var context = new MyDbContext();
 
-            if(getElements is null) return null;
+            return await context.Ranks.FirstOrDefaultAsync(i => i.Title == rankTitle) is null;
+        }
 
-            var rank = new Rank
-            {
-                Title = getElements[0],
-                Root = getElements[1],
-            };
+        private async Task<Rank> GetRank()
+        {
+            var getElements = CheckData([BoxName.Text, RootBox.Text]) ?? throw new ReceivedDataException(BoxName.Text, RootBox.Text);
 
-            return rank;
+            if (await CheckRankInBaseAsync(BoxName.Text)) throw new Exception(message:ErrorRankMessage);
+
+            return new Rank {Title = getElements[0], Root = getElements[1]};
         }
 
         private async void AddRoleBtn_Click(object sender, RoutedEventArgs e)
         {
-            var rank = GetRank();
+            Rank rank;
 
-            await _context.PushAsync(_context.Ranks, rank, "Должность была добавлена" );
+            try
+            {
+                rank = await GetRank();
+            }
+            catch (ArgumentNullException ex)
+            {
+                await FileLogs.WriteLogAsync(ex);
+                return;
+            }
+
+            using var context = new MyDbContext();
+
+            var message = await context.PushAsync(context.Ranks, rank) ? SuccessMessage : FailMessage;
+
+            MessageBox.Show(message);
+
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new Registration());
-        }
-
-        private void AddRole_OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            _context.Dispose();
         }
     }
 }

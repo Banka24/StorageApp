@@ -2,11 +2,8 @@
 
 namespace StorageApp
 {
-    internal class CategoryNotFoundException : Exception
-    {
-        public CategoryNotFoundException(string categoryId) : base($"Категория {categoryId} не найдена.")
-        {
+    internal class CategoryNotFoundException(string categoryId) : Exception($"Категория {categoryId} не найдена.");
 
-        }
-    }
+    internal class ReceivedDataException(params string[] errorValues) : Exception($"Были получены некорректные данные из {errorValues}");
+
 }
