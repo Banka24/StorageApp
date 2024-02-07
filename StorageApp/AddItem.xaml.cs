@@ -12,27 +12,39 @@ namespace StorageApp
 
     public partial class AddItem
     {
-        private readonly MyDbContext _context;
         public AddItem()
         {
             InitializeComponent();
-            _context = new MyDbContext();
         }
 
         private async Task<int> GetCategoryIdAsync()
         {
-            return await _context.Categories.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefaultAsync();
-        }
-
-        private async Task<Item> MakeItemAsync(int numberItem, int numberParty, int row, int shelf)  
-        {
-            var categoryId = await GetCategoryIdAsync();
+            int categoryId;
+            using (var context = new MyDbContext())
+            {
+                categoryId = await context.Categories.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefaultAsync();
+            }
 
             if (categoryId <= 0)
             {
-                MessageBox.Show("Произошла ошибка, проверьте логи");
-                await FileLogs.WriteLogAsync(new Exception(message:"Была найдена несуществующая категория"));
-                return null;
+                throw new CategoryNotFoundException($"{Combo.Text}");
+            }
+
+            return categoryId;
+        }
+
+        private async Task<Item> MakeItemAsync(int numberItem, int numberParty, int row, int shelf)
+        {
+            int categoryId;
+
+            try
+            {
+                categoryId = await GetCategoryIdAsync();
+            }
+            catch (Exception ex)
+            {
+                await FileLogs.WriteLogAsync(ex);
+                throw;
             }
 
             var item = new Item
@@ -72,11 +84,20 @@ namespace StorageApp
             if (item is null)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи");
-                await FileLogs.WriteLogAsync(new Exception(message: "Был получен пустой объект"));
+                await FileLogs.WriteLogAsync(new Exception(message:"Был передан пустой объект"));
                 return;
             }
 
-            await _context.PushAsync(_context.Items, item, "Товар добавлен");
+            using var context = new MyDbContext();
+
+            if (await context.PushAsync(context.Items, item))
+            {
+                MessageBox.Show("Товар добавлен");
+            }
+            else
+            {
+                MessageBox.Show("Произошла ошибка, проверьте логи.");
+            }
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -86,16 +107,17 @@ namespace StorageApp
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var items = await _context.Categories.Select(i => i.Name).ToArrayAsync();
+            string[] items;
+
+            using (var context = new MyDbContext())
+            {
+                items = await context.Categories.Select(i => i.Name).ToArrayAsync();
+            }
+
             foreach (var item in items)
             {
                 Combo.Items.Add(item);
             }
-        }
-        
-        private void AddItem_OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            _context.Dispose();
         }
     }
 }

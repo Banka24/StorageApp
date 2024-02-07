@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace StorageApp
 {
@@ -14,21 +13,19 @@ namespace StorageApp
         public DbSet<Status> Status { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        public async Task PushAsync<T>(DbSet dbSet, T value, string message)
+        public async Task<bool> PushAsync<T>(DbSet<T> dbSet, T value) where T : class
         {
-            if (value is not null)
+            if (value is null) return false;
+            dbSet.Add(value);
+            try
             {
-                dbSet.Add(value);
-                try
-                {
-                    await SaveChangesAsync();
-                    MessageBox.Show(message);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Произошла ошибка, проверьте логи.");
-                    await FileLogs.WriteLogAsync(ex);
-                }
+                await SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await FileLogs.WriteLogAsync(ex);
+                return false;
             }
         }
     }

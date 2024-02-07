@@ -118,6 +118,7 @@
       <DependentUpon>Authorization.xaml</DependentUpon>
     </Compile>
     <Compile Include="Category.cs" />
+    <Compile Include="CategoryNotFoundException.cs" />
     <Compile Include="EditServer.xaml.cs">
       <DependentUpon>EditServer.xaml</DependentUpon>
     </Compile>
