@@ -26,5 +26,6 @@
             <Button Name="ExitButton" Content="Выйти" Style="{StaticResource ButtonSmall}" Click="ExitButton_Click" Margin="25, 0"/>
             <Button Name="SettingServerBtn" Content="Настройка сервера" Width="150" Style="{StaticResource ButtonSmall}"  Margin="25, 0" Click="SettingServerBtn_Click"/>
         </StackPanel>
+        <Frame Name="MainFrame" Grid.RowSpan="4"/>
     </Grid>
 </Window>

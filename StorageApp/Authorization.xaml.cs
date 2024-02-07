@@ -12,7 +12,6 @@ namespace StorageApp
     /// </summary>
     public partial class Authorization
     {
-      
         public Authorization()
         {
             InitializeComponent();
@@ -20,16 +19,13 @@ namespace StorageApp
 
         private static string GetFullPath()
         {
-            const string jsonFilePath = "zeroUser.json";
             var projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.FullName ?? string.Empty;
-            var fullPath = Path.Combine(projectDirectory, jsonFilePath);
-            return fullPath;
+            return Path.Combine(projectDirectory, "zeroUser.json");
         }
 
-        private static Worker CheckZeroUser(string login, string password)
+        private static Worker GetZeroUser(string login, string password)
         {
-            var fullFilePath = GetFullPath();
-            var jsonFile = File.ReadAllText(fullFilePath);
+            var jsonFile = File.ReadAllText(GetFullPath());
             var jsonObject = JObject.Parse(jsonFile);
 
             if (!jsonObject.TryGetValue("Login", out var value) || value.ToString() != login || !jsonObject.TryGetValue("Password", out var value1) || value1.ToString() != password) return null;
@@ -39,43 +35,48 @@ namespace StorageApp
                 Login = login,
                 Password = password,
             };
-            return worker;
 
+            return worker;
         }
 
-        private static async Task CheckUser(string login, string password)
+        private static async Task<Worker> GetUserAsync(string login, string password)
         {
-            var context = new MyDbContext();
-            Worker user = null;
+            using var context = new MyDbContext();
+
             try
             {
-                user = await context.Workers.Include(i => i.Name).SingleOrDefaultAsync(i => i.Login == login && i.Password == password);
+                var user = await context.Workers.Include(i => i.Name).SingleOrDefaultAsync(i => i.Login == login && i.Password == password);
+                return user;
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show("Произошла ошибка, проверьте настройки подключения к сети и проверьте логи");
                 await FileLogs.WriteLogAsync(ex);
             }
+
+            return null;
+        }
+
+        private async Task CheckUserAsync()
+        {
+            var user = await GetUserAsync(LoginTextBox.Text, MyPassword.Password);
 
             if (user is not null)
             {
                 SharedContext.Name = user.Name.FirstName;
                 SharedContext.Role = user.RankId;
             }
+            else if(GetZeroUser(LoginTextBox.Text, MyPassword.Password) is not null)
+            {
+                SharedContext.Role = 1;
+                SharedContext.Name = "Админ";
+            }
             else
             {
-                user = CheckZeroUser(login, password);
-
-                if (user is not null)
-                {
-                    SharedContext.Role = 1;
-                    SharedContext.Name = "Админ";
-                }
-                else
-                {
-                    MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
-                }
+                MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
+                return;
             }
+            ChangeWindow();
         }
 
         private void ChangeWindow()
@@ -87,13 +88,7 @@ namespace StorageApp
 
         private async void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            var login = LoginTextBox.Text;
-            var password = MyPassword.Password;
-            await Task.Run(async () => await CheckUser(login, password));
-            if (SharedContext.Role != 0)
-            {
-                ChangeWindow();
-            }
+            await Task.Run(CheckUserAsync);
         }
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
@@ -101,8 +96,7 @@ namespace StorageApp
         }
         private void SettingServerBtn_Click(object sender, RoutedEventArgs e)
         {
-            Content = new EditServer();
-            Show();
+            MainFrame?.Navigate(new EditServer());
         }
     }
 }

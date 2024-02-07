@@ -27,12 +27,14 @@ namespace StorageApp
         private async Task<Item> MakeItemAsync(int numberItem, int numberParty, int row, int shelf)  
         {
             var categoryId = await GetCategoryIdAsync();
-            if ( categoryId <= 0)
+
+            if (categoryId <= 0)
             {
                 MessageBox.Show("Произошла ошибка, проверьте логи");
                 await FileLogs.WriteLogAsync(new Exception(message:"Была найдена несуществующая категория"));
                 return null;
             }
+
             var item = new Item
             {
                 InventoryNumber = $"{numberItem}{numberParty}{DateTime.Now:ddMMyyyy}",
@@ -43,21 +45,6 @@ namespace StorageApp
             };
 
             return item;
-        }
-
-        private async Task PushItemAsync(Item item)
-        {
-            _context.Items.Add(item);
-            try
-            {
-                await _context.SaveChangesAsync();
-                MessageBox.Show("Товар добавлен");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Произошла ошибка, проверьте логи.");
-                await FileLogs.WriteLogAsync(ex);
-            }
         }
 
         private async void Add_Click(object sender, RoutedEventArgs e)
@@ -88,7 +75,8 @@ namespace StorageApp
                 await FileLogs.WriteLogAsync(new Exception(message: "Был получен пустой объект"));
                 return;
             }
-            await PushItemAsync(item);
+
+            await _context.PushAsync(_context.Items, item, "Товар добавлен");
 
         }
 

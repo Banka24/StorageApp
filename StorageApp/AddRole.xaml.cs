@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 
 namespace StorageApp
@@ -10,27 +8,27 @@ namespace StorageApp
     /// </summary>
     public partial class AddRole
     {
+        private readonly MyDbContext _context;
         public AddRole()
         {
             InitializeComponent();
+            _context = new MyDbContext();
         }
 
         private static string[] CheckData(in string[] strings)
         {
             if (!strings.Any(string.IsNullOrWhiteSpace)) return strings;
+
             MessageBox.Show("Введено некорректное значение");
+
             return null;
         }
 
-        private async Task<Rank> GetRankAsync()
+        private Rank GetRank()
         {
-            string[] getElements = [BoxName.Text, RootBox.Text];
-            if (CheckData(getElements) is null)
-            {
-                MessageBox.Show("Произошла ошибка, проверьте логи.");
-                await FileLogs.WriteLogAsync(new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
-                return null;
-            }
+            var getElements =  CheckData([BoxName.Text, RootBox.Text]);
+
+            if(getElements is null) return null;
 
             var rank = new Rank
             {
@@ -41,33 +39,21 @@ namespace StorageApp
             return rank;
         }
 
-        private async Task PushRankAsync()
-        {
-            using var context = new MyDbContext();
-            var rank = await GetRankAsync();
-            if (rank is not null)
-            {
-                context.Ranks.Add(rank);
-                try
-                {
-                    await context.SaveChangesAsync();
-                }
-                catch (Exception ex)
-                {
-                    await FileLogs.WriteLogAsync(ex);
-                }
-                MessageBox.Show("Должность была добавлена");
-            }
-        }
-
         private async void AddRoleBtn_Click(object sender, RoutedEventArgs e)
         {
-            await PushRankAsync();
+            var rank = GetRank();
+
+            await _context.PushAsync(_context.Ranks, rank, "Должность была добавлена" );
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new Registration());
+        }
+
+        private void AddRole_OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            _context.Dispose();
         }
     }
 }
