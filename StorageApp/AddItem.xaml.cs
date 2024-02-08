@@ -1,118 +1,119 @@
 ﻿using System;
-using System.Linq;
-using System.Windows;
-using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 
-namespace StorageApp
+namespace StorageApp;
+
+/// <summary>
+///     Логика взаимодействия для AddItem.xaml
+/// </summary>
+public partial class AddItem
 {
-    /// <summary>
-    /// Логика взаимодействия для AddItem.xaml
-    /// </summary>
+    private const string SuccessMessage = "Товар добавлен";
+    private const string FailMessage = "Произошла ошибка, проверьте логи.";
 
-    public partial class AddItem
+    public AddItem()
     {
-        private const string SuccessMessage = "Товар добавлен";
-        private const string FailMessage = "Произошла ошибка, проверьте логи.";
-        public AddItem()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private async Task<int> GetCategoryIdAsync()
-        {
-            int categoryId;
+    private async Task<int> GetCategoryIdAsync()
+    {
+        using var context = new MyDbContext();
 
-            using (var context = new MyDbContext())
+        return await context.Categories.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefaultAsync();
+    }
+
+    private async Task<bool> CheckCategory(int id)
+    {
+        if (id > 0) return true;
+
+        await FileLogs.WriteLogAsync(new CategoryNotFoundException($"{Combo.Text}"));
+
+        return false;
+    }
+
+    private async Task<Item> MakeItemAsync(int numberItem, int numberParty, int row, int shelf)
+    {
+        var categoryId = await GetCategoryIdAsync();
+
+        if (await CheckCategory(categoryId))
+            return new Item
             {
-                categoryId = await context.Categories.Where(i => i.Name == Combo.Text).Select(i => i.Id).FirstOrDefaultAsync();
-            }
-
-            if (categoryId <= 0) throw new CategoryNotFoundException($"{Combo.Text}");
-
-            return categoryId;
-        }
-
-        private async Task<Item> MakeItemAsync(int numberItem, int numberParty, int row, int shelf)
-        {
-            int categoryId;
-
-            try
-            {
-                categoryId = await GetCategoryIdAsync();
-            }
-            catch (Exception ex)
-            {
-                await FileLogs.WriteLogAsync(ex);
-                throw;
-            }
-
-            var item = new Item
-            {
-                InventoryNumber = $"{numberItem}{numberParty}{DateTime.Now:ddMMyyyy}",
-                CategoryId = categoryId,
-                StatusId = 1,
-                Row = row,
-                Shelf = shelf
+                InventoryNumber = $"{numberItem}{numberParty}{DateTime.Now:ddMMyyyy}", CategoryId = categoryId,
+                StatusId = 1, Row = row, Shelf = shelf
             };
 
-            return item;
-        }
+        return null;
+    }
 
-        private async void Add_Click(object sender, RoutedEventArgs e)
+    private async void Add_Click(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(Combo.Text))
         {
-            if (string.IsNullOrWhiteSpace(Combo.Text))
-            {
-                MessageBox.Show("Выберите категорию");
-                return;
-            }
-
-            if (!int.TryParse(NumberItem.Text, out var numberItem) || !int.TryParse(NumberParty.Text, out var numberParty))
-            {
-                MessageBox.Show("Введите числа в номер партии и порядковый номер");
-                return;
-            }
-
-            if (!int.TryParse(RowTextBox.Text, out var row) || !int.TryParse(ShelfTextBox.Text, out var shelf))
-            {
-                MessageBox.Show("Введите ряд и полку");
-                return;
-            }
-
-            var item = await MakeItemAsync(numberItem, numberParty, row, shelf);
-
-            if (item is null)
-            {
-                MessageBox.Show("Произошла ошибка, проверьте логи");
-                await FileLogs.WriteLogAsync(new Exception(message:"Был передан пустой объект"));
-                return;
-            }
-
-            using var context = new MyDbContext();
-
-            var message = await context.PushAsync(context.Items, item) ? SuccessMessage : FailMessage;
-
-            MessageBox.Show(message);
+            MessageBox.Show("Выберите категорию");
+            return;
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
+        if (!int.TryParse(NumberItem.Text, out var numberItem) || !int.TryParse(NumberParty.Text, out var numberParty))
         {
-            NavigationService?.Navigate(new Editor());
+            MessageBox.Show("Введите числа в номер партии и порядковый номер");
+            return;
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        if (!int.TryParse(RowTextBox.Text, out var row) || !int.TryParse(ShelfTextBox.Text, out var shelf))
         {
-            string[] items;
-
-            using (var context = new MyDbContext())
-            {
-                items = await context.Categories.Select(i => i.Name).ToArrayAsync();
-            }
-
-            foreach (var item in items)
-            {
-                Combo.Items.Add(item);
-            }
+            MessageBox.Show("Введите ряд и полку");
+            return;
         }
+
+        var item = await MakeItemAsync(numberItem, numberParty, row, shelf);
+
+        if (item is null)
+        {
+            MessageBox.Show(FailMessage);
+            await FileLogs.WriteLogAsync(new NullDataException());
+            return;
+        }
+
+        using var context = new MyDbContext();
+
+        context.Items.Add(item);
+
+        var message = await context.PushAsync() ? SuccessMessage : FailMessage;
+
+        MessageBox.Show(message);
+    }
+
+    private void Exit_Click(object sender, RoutedEventArgs e)
+    {
+        NavigationService?.Navigate(new Editor());
+    }
+
+    private static async Task<string[]> GetCategoriesAsync()
+    {
+        using var context = new MyDbContext();
+        return await context.Categories.Select(i => i.Name).ToArrayAsync();
+    }
+
+    private void LoadCategories(in string[] items)
+    {
+        foreach (var item in items) Combo.Items.Add(item);
+    }
+
+    private async void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        var items = await GetCategoriesAsync();
+
+        if (items is null)
+        {
+            MessageBox.Show(FailMessage);
+            await FileLogs.WriteLogAsync(new NullDataException());
+            return;
+        }
+
+        LoadCategories(items);
     }
 }

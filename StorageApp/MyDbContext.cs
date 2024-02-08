@@ -13,10 +13,8 @@ namespace StorageApp
         public DbSet<Status> Status { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        public async Task<bool> PushAsync<T>(DbSet<T> dbSet, T value) where T : class
+        public async Task<bool> PushAsync() 
         {
-            if (value is null) return false;
-            dbSet.Add(value);
             try
             {
                 await SaveChangesAsync();

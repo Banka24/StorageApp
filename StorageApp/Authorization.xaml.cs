@@ -12,6 +12,8 @@ namespace StorageApp
     /// </summary>
     public partial class Authorization
     {
+        private const string ErrorConnectionMessage = "Произошла ошибка, проверьте настройки подключения к сети и проверьте логи";
+        private const string ErrorUserMessage = "Такого пользователя нет. Проверьте логин и пароль.";
         public Authorization()
         {
             InitializeComponent();
@@ -30,13 +32,7 @@ namespace StorageApp
 
             if (!jsonObject.TryGetValue("Login", out var value) || value.ToString() != login || !jsonObject.TryGetValue("Password", out var value1) || value1.ToString() != password) return null;
 
-            var worker = new Worker
-            {
-                Login = login,
-                Password = password,
-            };
-
-            return worker;
+            return new Worker { Login = login, Password = password, };
         }
 
         private static async Task<Worker> GetUserAsync(string login, string password)
@@ -50,7 +46,7 @@ namespace StorageApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Произошла ошибка, проверьте настройки подключения к сети и проверьте логи");
+                MessageBox.Show(ErrorConnectionMessage);
                 await FileLogs.WriteLogAsync(ex);
             }
 
@@ -73,7 +69,7 @@ namespace StorageApp
             }
             else
             {
-                MessageBox.Show("Такого пользователя нет. Проверьте логин и пароль.");
+                MessageBox.Show(ErrorUserMessage);
                 return;
             }
             ChangeWindow();
