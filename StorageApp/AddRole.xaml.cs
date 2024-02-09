@@ -51,6 +51,7 @@ public partial class AddRole
         }
         catch (Exception ex)
         {
+            MessageBox.Show(FailMessage);
             await FileLogs.WriteLogAsync(ex);
             return;
         }

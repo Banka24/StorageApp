@@ -1,52 +1,59 @@
-﻿using System;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Windows;
 using System.Threading.Tasks;
-using System.Data.Entity;
+using System.Windows;
 
-namespace StorageApp
+namespace StorageApp;
+
+/// <summary>
+///     Логика взаимодействия для DeleteItem.xaml
+/// </summary>
+public partial class DeleteItem
 {
-    /// <summary>
-    /// Логика взаимодействия для DeleteItem.xaml
-    /// </summary>
-    public partial class DeleteItem
+    private const string SuccessMessage = "Товар удалён";
+    private const string FailMessage = "Произошла ошибка, проверьте логи";
+
+    public DeleteItem()
     {
-        public DeleteItem()
+        InitializeComponent();
+    }
+
+    private void Exit_Click(object sender, RoutedEventArgs e)
+    {
+        NavigationService?.Navigate(new Editor());
+    }
+
+    private async Task<Item> GetItemAsync()
+    {
+        using var context = new MyDbContext();
+        return await context.Items.Where(i => i.InventoryNumber == Delete.Text).FirstAsync();
+    }
+
+    private async Task<bool> RemoveItemAsync()
+    {
+        var item = await GetItemAsync();
+
+        if (item is null)
         {
-            InitializeComponent();
+            await FileLogs.WriteLogAsync(new NullDataException());
+            await FileLogs.WriteLogAsync(new RemoveNullDataException());
+            return false;
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService?.Navigate(new Editor());
-        }
+        using var context = new MyDbContext();
+        context.Items.Remove(item);
+        var message = await context.PushAsync() ? SuccessMessage : FailMessage;
 
-        private async Task RemoveItem()
-        {
-            using var context = new MyDbContext();
-            var item = await context.Items?.Where(i => i.InventoryNumber == Delete.Text).FirstAsync()!;
-            context.Items?.Remove(item);
+        MessageBox.Show(message);
+        return true;
+    }
 
-            try
-            {
-                await context.SaveChangesAsync();
-                MessageBox.Show("Товар удалён");
-            }
-            catch(Exception ex)
-            {
-                await FileLogs.WriteLogAsync(ex);
-            }
+    private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(Delete.Text)) MessageBox.Show("Введите все требуемые данные данные");
 
-        }
+        var message = await RemoveItemAsync() ? SuccessMessage : FailMessage;
 
-        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(string.IsNullOrWhiteSpace(Delete.Text))
-            {
-                MessageBox.Show("введите все требуемые данные данные");
-            }
-
-            await RemoveItem();
-        }
+        MessageBox.Show(message);
     }
 }
