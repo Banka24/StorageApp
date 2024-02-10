@@ -2,116 +2,110 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System;
 using System.Windows.Controls;
 
-namespace StorageApp
+namespace StorageApp;
+
+/// <summary>
+///     Логика взаимодействия для MainWindow.xaml
+/// </summary>
+public partial class MainWindow
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow
+    private enum Role
     {
-        private enum Role
+        Administrator = 1,
+        Supervisor,
+        Worker
+    }
+
+    public MainWindow()
+    {
+        InitializeComponent();
+    }
+
+    private void BtnInfIt_Click(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new InfoItem());
+    }
+
+    private void BtnInfIt_Click_1(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new Editor());
+    }
+
+    private void BtnGoAdmin_Click(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new Reports());
+    }
+
+    private void Logout_Click(object sender, RoutedEventArgs e)
+    {
+        var window = new Authorization();
+        window.Show();
+        Close();
+    }
+
+    private static async Task<Worker> GetWorkerAsync()
+    {
+        using var context = new MyDbContext();
+        return await context.Workers?.Where(i => i.Name.FirstName == SharedContext.Name).SingleOrDefaultAsync()!;
+    }
+
+    private static async Task StartWorkShiftAsync()
+    {
+        using var context = new MyDbContext();
+
+        var worker = await GetWorkerAsync();
+
+        if (worker == null) return;
+
+        if (worker.OnWork == "YES")
         {
-            Administrator = 1,
-            Supervisor,
-            Worker,
+            MessageBox.Show("Вы закончили смену");
+            worker.OnWork = "NO";
         }
-        public MainWindow()
+        else
         {
-            InitializeComponent();
+            MessageBox.Show("Вы начали смену");
+            worker.OnWork = "YES";
         }
+    }
 
-        private void BtnInfIt_Click(object sender, RoutedEventArgs e)
+    private async void BtnGoWork_Click(object sender, RoutedEventArgs e)
+    {
+        using var context = new MyDbContext();
+        await StartWorkShiftAsync();
+        await context.PushAsync();
+    }
+
+    private static void MakeButtonVisible(Button[] buttons)
+    {
+        foreach (var button in buttons) button.Visibility = Visibility.Visible;
+    }
+
+    private void MakeMainMenu(string name, int role)
+    {
+        TextName.Text = $"Добрый день, {name}";
+        switch (role)
         {
-            MainFrame.Navigate(new InfoItem());
+            case (int)Role.Administrator:
+                MakeButtonVisible([BtnInfAdmin, BtnGoAdmin, RegistrationBtn]);
+                break;
+
+            case (int)Role.Supervisor:
+            case (int)Role.Worker:
+                MakeButtonVisible([BtnInfIt, BtnGoWork]);
+                break;
         }
+    }
 
-        private void BtnInfIt_Click_1(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new Editor());
-        }
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        MakeMainMenu(SharedContext.Name, SharedContext.Role);
+    }
 
-        private void BtnGoAdmin_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new Reports());
-        }
-
-        private void Logout_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new Authorization();
-            window.Show();
-            Close();
-        }
-
-        private static async Task<Worker> GetWorker(MyDbContext context)
-        {
-            return await context.Workers?.Where(i => i.Name.FirstName == SharedContext.Name).SingleOrDefaultAsync()!;
-        }
-
-        private static async Task StartWorkShift(MyDbContext context)
-        {
-            var worker = await GetWorker(context);
-
-            if (worker == null)
-            {
-                return;
-            }
-
-            if (worker.OnWork == "YES")
-            {
-                MessageBox.Show("Вы закончили смену");
-                worker.OnWork = "NO";
-            }
-            else
-            {
-                MessageBox.Show("Вы начали смену");
-                worker.OnWork = "YES";
-            }
-        }
-
-        private async void BtnGoWork_Click(object sender, RoutedEventArgs e)
-        {
-            using var context = new MyDbContext();
-            await StartWorkShift(context);
-            try
-            {
-                await context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                await FileLogs.WriteLogAsync(ex);
-            }
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            TextName.Text = $"Добрый день, {SharedContext.Name}";
-            switch (SharedContext.Role)
-            {
-                case (int)Role.Administrator:
-                    Button[] adminButtons = [BtnInfAdmin, BtnGoAdmin, RegistrationBtn];
-                    foreach (var button in adminButtons)
-                    {
-                        button.Visibility = Visibility.Visible;
-                    }
-                    break;
-
-                case (int)Role.Supervisor:
-                case (int)Role.Worker:
-                    Button[] workerButtons = [BtnInfIt, BtnGoWork];
-                    foreach (var button in workerButtons)
-                    {
-                        button.Visibility = Visibility.Visible;
-                    }
-                    break;
-            }
-        }
-
-        private void RegistrationBtn_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new Registration());
-        }
+    private void RegistrationBtn_Click(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new Registration());
     }
 }

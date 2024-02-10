@@ -1,32 +1,31 @@
 ﻿using System.Windows;
 
-namespace StorageApp
+namespace StorageApp;
+
+/// <summary>
+///     Логика взаимодействия для Reports.xaml
+/// </summary>
+public partial class Reports
 {
-    /// <summary>
-    /// Логика взаимодействия для Reports.xaml
-    /// </summary>
-    public partial class Reports
+    public Reports()
     {
-        public Reports()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void BtnIt_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService?.Navigate(new ReportItems());
-        }
+    private void BtnIt_Click(object sender, RoutedEventArgs e)
+    {
+        NavigationService?.Navigate(new ReportItems());
+    }
 
-        private void BtnWo_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService?.Navigate(new ReportWorker());
-        }
+    private void BtnWo_Click(object sender, RoutedEventArgs e)
+    {
+        NavigationService?.Navigate(new ReportWorker());
+    }
 
-        private void BtnBack_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new MainWindow();
-            window.Show();
-            Window.GetWindow(this)?.Close();
-        }
+    private void BtnBack_Click(object sender, RoutedEventArgs e)
+    {
+        var window = new MainWindow();
+        window.Show();
+        Window.GetWindow(this)?.Close();
     }
 }

@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace StorageApp
+namespace StorageApp;
+
+internal class Status
 {
-    internal class Status
-    {
-        public byte Id { get; set; }
-        [MaxLength (25)]
-        public string Name { get; set; }
-        public virtual ICollection<Item> Items { get; set; }
-    }
+    public byte Id { get; set; }
+    [MaxLength(25)] public string Name { get; set; }
+    public virtual ICollection<Item> Items { get; set; }
 }

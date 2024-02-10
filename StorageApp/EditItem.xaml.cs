@@ -71,8 +71,7 @@ public partial class EditItem
 
     private async void Redact_Click(object sender, RoutedEventArgs e)
     {
-        if ((string.IsNullOrWhiteSpace(Data.Text) && Data.IsEnabled) || string.IsNullOrWhiteSpace(Combo.Text) ||
-            string.IsNullOrWhiteSpace(InventoryNumberTextBox.Text))
+        if ((string.IsNullOrWhiteSpace(Data.Text) && Data.IsEnabled) || string.IsNullOrWhiteSpace(Combo.Text) || string.IsNullOrWhiteSpace(InventoryNumberTextBox.Text))
         {
             MessageBox.Show("Введите все требуемые данные данные");
             return;
