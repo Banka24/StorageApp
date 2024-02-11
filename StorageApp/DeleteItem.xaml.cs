@@ -29,7 +29,7 @@ public partial class DeleteItem
         return await context.Items.Where(i => i.InventoryNumber == Delete.Text).FirstAsync();
     }
 
-    private async Task<bool> RemoveItemAsync()
+    private async Task RemoveItemAsync()
     {
         var item = await GetItemAsync();
 
@@ -37,7 +37,7 @@ public partial class DeleteItem
         {
             await FileLogs.WriteLogAsync(new NullDataException());
             await FileLogs.WriteLogAsync(new RemoveNullDataException());
-            return false;
+            return;
         }
 
         using var context = new MyDbContext();
@@ -45,15 +45,16 @@ public partial class DeleteItem
         var message = await context.PushAsync() ? SuccessMessage : FailMessage;
 
         MessageBox.Show(message);
-        return true;
     }
 
     private async void DeleteButton_Click(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(Delete.Text)) MessageBox.Show("Введите все требуемые данные данные");
+        if (string.IsNullOrWhiteSpace(Delete.Text))
+        {
+            MessageBox.Show("Введите все требуемые данные");
+            return;
+        }
 
-        var message = await RemoveItemAsync() ? SuccessMessage : FailMessage;
-
-        MessageBox.Show(message);
+        await RemoveItemAsync();
     }
 }

@@ -27,8 +27,8 @@ public partial class Registration
 
     private static Worker MakeWorker(in string[] data, in int nameId)
     {
-        return new Worker
-            { Login = data[0], Password = data[1], NameId = nameId, RankId = GetRankId(data[4]), OnWork = "NO" };
+        var rankId = GetRankId(data[4]);
+        return rankId > 0 ? new Worker { Login = data[0], Password = data[1], NameId = nameId, RankId = rankId, OnWork = "NO" } : null;
     }
 
     private static int GetRankId(string rank)
@@ -76,14 +76,16 @@ public partial class Registration
         if (CheckData(getElements) is null)
         {
             MessageBox.Show(FailMessage);
-            await FileLogs.WriteLogAsync(new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
+            await FileLogs.WriteLogAsync(
+                new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
             return;
         }
 
         var nameId = await GetNameIdAsync(getElements[2], getElements[3]);
-        if (nameId < 1) return;
+
         var worker = MakeWorker(getElements, nameId);
-        await PushWorkerAsync(worker);
+
+        if (worker is not null) await PushWorkerAsync(worker);
     }
 
     private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -96,7 +98,9 @@ public partial class Registration
     private void SetRankValues()
     {
         using var context = new MyDbContext();
+
         var items = context.Ranks.Select(i => i.Title).ToArray();
+
         foreach (var item in items) RankBox.Items.Add(item);
     }
 

@@ -51,6 +51,18 @@ public partial class MainWindow
         return await context.Workers?.Where(i => i.Name.FirstName == SharedContext.Name).SingleOrDefaultAsync()!;
     }
 
+    private static void GetStatus(ref Worker worker)
+    {
+        if (worker.OnWork == "YES")
+        {
+            MessageBox.Show("Вы закончили смену");
+            worker.OnWork = "NO";
+            return;
+        }
+
+        MessageBox.Show("Вы начали смену");
+    }
+
     private static async Task StartWorkShiftAsync()
     {
         using var context = new MyDbContext();
@@ -59,16 +71,7 @@ public partial class MainWindow
 
         if (worker == null) return;
 
-        if (worker.OnWork == "YES")
-        {
-            MessageBox.Show("Вы закончили смену");
-            worker.OnWork = "NO";
-        }
-        else
-        {
-            MessageBox.Show("Вы начали смену");
-            worker.OnWork = "YES";
-        }
+        GetStatus(ref worker);
     }
 
     private async void BtnGoWork_Click(object sender, RoutedEventArgs e)

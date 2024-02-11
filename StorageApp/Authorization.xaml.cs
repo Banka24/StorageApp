@@ -14,8 +14,7 @@ public partial class Authorization
 {
     private const string SuccessMessage = "Авторизация прошла успешна.";
 
-    private const string ErrorConnectionMessage =
-        "Произошла ошибка, проверьте настройки подключения к сети и проверьте логи";
+    private const string ErrorConnectionMessage = "Произошла ошибка, проверьте настройки подключения к сети и проверьте логи";
 
     private const string ErrorUserMessage = "Такого пользователя нет. Проверьте логин и пароль.";
 
