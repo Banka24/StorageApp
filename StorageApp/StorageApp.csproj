@@ -119,8 +119,14 @@
     </Compile>
     <Compile Include="Category.cs" />
     <Compile Include="CategoryNotFoundException.cs" />
+    <Compile Include="DeleteWorker.xaml.cs">
+      <DependentUpon>DeleteWorker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditServer.xaml.cs">
       <DependentUpon>EditServer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditWorker.xaml.cs">
+      <DependentUpon>EditWorker.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileLogs.cs" />
     <Compile Include="InfoItem.xaml.cs">
@@ -162,6 +168,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DeleteWorker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -171,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditServer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditWorker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

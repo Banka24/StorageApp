@@ -76,8 +76,7 @@ public partial class Registration
         if (CheckData(getElements) is null)
         {
             MessageBox.Show(FailMessage);
-            await FileLogs.WriteLogAsync(
-                new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения"));
+            await FileLogs.WriteLogAsync(new ArgumentException("Произошла ошибка полученных данных. Были введены пустые значения")).ConfigureAwait(false);
             return;
         }
 
