@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -45,13 +46,12 @@ public partial class MainWindow
         Close();
     }
 
-    private static async Task<Worker> GetWorkerAsync()
+    private static async Task<Worker> GetWorkerAsync(MyDbContext context)
     {
-        using var context = new MyDbContext();
         return await context.Workers?.Where(i => i.Name.FirstName == SharedContext.Name).SingleOrDefaultAsync()!;
     }
 
-    private static void GetStatus(ref Worker worker)
+    private static void GetStatus(Worker worker)
     {
         if (worker.OnWork == "YES")
         {
@@ -67,11 +67,12 @@ public partial class MainWindow
     {
         using var context = new MyDbContext();
 
-        var worker = await GetWorkerAsync();
+        var worker = await GetWorkerAsync(context);
 
         if (worker == null) return;
 
-        GetStatus(ref worker);
+        GetStatus(worker);
+        await context.SaveChangesAsync();
     }
 
     private async void BtnGoWork_Click(object sender, RoutedEventArgs e)
@@ -81,7 +82,7 @@ public partial class MainWindow
         await context.PushAsync();
     }
 
-    private static void MakeButtonVisible(Button[] buttons)
+    private static void MakeButtonVisible(IEnumerable<Button> buttons)
     {
         foreach (var button in buttons) button.Visibility = Visibility.Visible;
     }
@@ -92,7 +93,7 @@ public partial class MainWindow
         switch (role)
         {
             case (int)Role.Administrator:
-                MakeButtonVisible([BtnInfAdmin, BtnGoAdmin, RegistrationBtn]);
+                MakeButtonVisible((Button[])[BtnInfAdmin, BtnGoAdmin, RegistrationBtn]);
                 break;
 
             case (int)Role.Supervisor:
